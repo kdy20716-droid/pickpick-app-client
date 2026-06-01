@@ -2,36 +2,62 @@
   position: sticky;
   top: 0;
   z-index: 120;
-  height: 80px;
+  height: 64px;
   background: var(--bg);
 }
 
+@media (min-width: 768px) {
+  .site-header {
+    height: 80px;
+  }
+}
+
 .header-inner {
-  width: calc(100% - 22px);
+  width: calc(100% - 32px);
   max-width: 1420px;
   height: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space);
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .header-inner {
+    width: calc(100% - 22px);
+    gap: var(--space);
+  }
 }
 
 .brand {
   font-family: "Jersey 25", cursive;
-  font-size: 3.5rem;
+  font-size: 2.2rem;
   line-height: 1;
   color: var(--point);
   letter-spacing: 0.03em;
 }
 
+@media (min-width: 768px) {
+  .brand {
+    font-size: 3.5rem;
+  }
+}
+
 .site-nav {
   display: flex;
   align-items: center;
-  gap: clamp(14px, calc(var(--layout-vw) * 0.03), 36px);
-  font-size: 1.5rem;
+  gap: clamp(10px, calc(var(--layout-vw) * 0.02), 36px);
+  font-size: 1rem;
   font-weight: 300;
   white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .site-nav {
+    gap: clamp(14px, calc(var(--layout-vw) * 0.03), 36px);
+    font-size: 1.5rem;
+  }
 }
 
 .site-nav a:not(.account-link) {

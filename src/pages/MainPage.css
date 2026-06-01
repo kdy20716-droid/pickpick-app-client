@@ -23,7 +23,6 @@ html {
 body {
   margin: 0;
   width: 100%;
-  min-width: var(--app-min-width);
   background: var(--bg);
   color: var(--text);
   font-family: "REM", sans-serif;
@@ -46,9 +45,15 @@ img {
 }
 
 .page-main {
-  width: min(1180px, calc(100% - 50px));
+  width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
   padding-bottom: 40px;
+}
+
+@media (min-width: 768px) {
+  .page-main {
+    width: min(1180px, calc(100% - 50px));
+  }
 }
 
 .hero {
@@ -56,10 +61,17 @@ img {
 }
 
 .hero h1 {
-  margin: 50px 0 0;
-  font-size: 3.5rem;
+  margin: 40px 0 0;
+  font-size: 2.2rem;
   line-height: 1.12;
   font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .hero h1 {
+    margin: 50px 0 0;
+    font-size: 3.5rem;
+  }
 }
 
 .hero h1 span {
@@ -68,10 +80,17 @@ img {
 
 .hero p {
   width: min(780px, 100%);
-  margin: 16px auto 0;
-  font-size: 1.25rem;
+  margin: 12px auto 0;
+  font-size: 1rem;
   line-height: 1.55;
   font-weight: 700;
+}
+
+@media (min-width: 768px) {
+  .hero p {
+    margin: 16px auto 0;
+    font-size: 1.25rem;
+  }
 }
 
 .vote-section {
@@ -86,35 +105,59 @@ img {
 
 .rank-badge {
   position: absolute;
-  top: 20px;
-  left: calc(-1 * var(--badge-offset));
-  padding: 7px 10px 7px 7px;
-  border-radius: 20px 0 0 20px;
+  top: 12px;
+  left: 12px;
+  padding: 4px 8px;
+  border-radius: 12px;
   background: var(--badge);
-  z-index: 0;
+  z-index: 10;
+}
+
+@media (min-width: 1024px) {
+  .rank-badge {
+    top: 20px;
+    left: calc(-1 * var(--badge-offset));
+    padding: 7px 10px 7px 7px;
+    border-radius: 20px 0 0 20px;
+    z-index: 0;
+  }
 }
 
 .rank-badge-inner {
   display: block;
-  padding: 10px 16px;
-  border-radius: 14px;
+  padding: 6px 10px;
+  border-radius: 10px;
   background: var(--surface);
   color: var(--badge);
-  font-size: 1.7rem;
+  font-size: 1.1rem;
   font-weight: 800;
   line-height: 1;
+}
+
+@media (min-width: 1024px) {
+  .rank-badge-inner {
+    padding: 10px 16px;
+    border-radius: 14px;
+    font-size: 1.7rem;
+  }
 }
 
 .main-page .vote-card {
   position: relative;
   z-index: 1;
-  padding: var(--space);
+  padding: 20px;
   border: 0 !important;
   border-radius: 20px;
   overflow: visible !important;
   background: var(--surface);
   box-shadow: var(--shadow) !important;
   transform: none;
+}
+
+@media (min-width: 768px) {
+  .main-page .vote-card {
+    padding: var(--space);
+  }
 }
 
 .main-page:not(.is-leaving-for-vote) .vote-section > .vote-card:hover {
@@ -126,26 +169,46 @@ img {
 .vote-card h2 {
   margin: 0 0;
   text-align: center;
-  font-size: 2.8rem;
+  font-size: 1.5rem;
   font-weight: 550;
+  word-break: keep-all;
+}
+
+@media (min-width: 768px) {
+  .vote-card h2 {
+    font-size: 2.8rem;
+  }
 }
 
 .vote-match {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space);
-  padding-top: var(--space);
+  gap: 12px;
+  padding-top: 20px;
+}
+
+@media (min-width: 768px) {
+  .vote-match {
+    gap: var(--space);
+    padding-top: var(--space);
+  }
 }
 
 .main-page .candidate-card {
   position: relative;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 16px;
   background: #d9effa;
   aspect-ratio: 1 / 1.18;
   transform-origin: center;
   will-change: transform;
+}
+
+@media (min-width: 768px) {
+  .main-page .candidate-card {
+    border-radius: 20px;
+  }
 }
 
 .main-page .candidate-card img {
@@ -156,28 +219,28 @@ img {
 }
 
 .main-page .candidate-name {
-  --candidate-name-outline-size: 2px;
-  --candidate-name-outline-negative-size: -2px;
-  --candidate-name-accent-shadow: 0 3px 12px rgba(255, 255, 255, 0.28);
+  --candidate-name-outline-size: 1.5px;
+  --candidate-name-outline-negative-size: -1.5px;
+  --candidate-name-accent-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
   position: absolute;
   right: 0;
-  bottom: 14px;
+  bottom: 10px;
   left: 0;
   box-sizing: border-box;
   width: auto;
-  padding: 0 18px;
+  padding: 0 10px;
   display: -webkit-box;
-  max-height: calc(100% - 36px);
+  max-height: calc(100% - 24px);
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   text-align: center;
   overflow-wrap: anywhere;
   word-break: normal;
   white-space: normal;
-  font-size: 2.65rem;
+  font-size: 1.2rem;
   font-weight: 900;
-  line-height: 1.08;
+  line-height: 1.1;
   color: #ffffff;
   text-shadow:
     var(--candidate-name-outline-negative-size)
@@ -195,6 +258,19 @@ img {
     var(--candidate-name-accent-shadow);
 }
 
+@media (min-width: 768px) {
+  .main-page .candidate-name {
+    --candidate-name-outline-size: 2px;
+    --candidate-name-outline-negative-size: -2px;
+    --candidate-name-accent-shadow: 0 3px 12px rgba(255, 255, 255, 0.28);
+    bottom: 14px;
+    padding: 0 18px;
+    -webkit-line-clamp: 3;
+    font-size: 2.65rem;
+    line-height: 1.08;
+  }
+}
+
 .vs-mark {
   position: absolute;
   top: 53%;
@@ -209,16 +285,28 @@ img {
 
 .vs-mark img {
   width: 100%;
-  max-width: 82px;
+  max-width: 42px;
+}
+
+@media (min-width: 768px) {
+  .vs-mark img {
+    max-width: 82px;
+  }
 }
 
 .next-vote {
   display: block;
   margin-top: var(--space);
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 400;
   color: #555555;
   will-change: color;
+}
+
+@media (min-width: 768px) {
+  .next-vote {
+    font-size: 1.2rem;
+  }
 }
 

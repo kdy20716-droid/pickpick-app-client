@@ -292,10 +292,11 @@
   padding: var(--vote-sheet-glow-space);
   overflow-y: auto;
   scroll-snap-type: y mandatory;
-  scroll-padding-block: var(--vote-sheet-glow-space);
+  scroll-padding-top: var(--vote-sheet-glow-space);
   scroll-behavior: smooth;
   overscroll-behavior-y: contain;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .vote-page.is-entering-from-main .vote-feed {
@@ -966,19 +967,48 @@
     --vote-action-button-size: 56px;
     --vote-action-space: 0px;
     --vote-side-balance: 0px;
-    --vote-sheet-glow-space: 12px;
+    --vote-sheet-glow-space: 8px;
+    --vote-sheet-fixed-width: calc(100vw - var(--vote-sheet-glow-space) * 2);
     --vote-sheet-extra-height: 0px;
+    --vote-feed-width: 100vw;
+  }
+
+  .vote-feed {
+    width: 100vw;
+    min-width: 100vw;
+    padding: var(--vote-sheet-glow-space);
   }
 
   .vote-feed-item {
-    padding: 72px 0 92px;
+    padding: 72px 0 calc(92px + env(safe-area-inset-bottom, 0px));
   }
 
   .vote-action-rail {
     right: 50%;
-    bottom: 18px;
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
     flex-direction: row;
     transform: translateX(50%);
+  }
+
+  .vote-action-button:active {
+    transform: scale(0.92) !important;
+    background-color: #f0f0f0;
+    transition: transform 0.1s ease;
+  }
+
+  .vote-action-button.is-active:active {
+    background: var(--vote-action-active-bg);
+    filter: brightness(1.1);
+  }
+
+  .vote-filter-chip:active {
+    transform: scale(0.96);
+    background-color: #f8f8f8;
+  }
+
+  .vote-filter-chip.is-active:active {
+    background-color: var(--filter-chip-active-bg);
+    filter: brightness(0.9);
   }
 
   .vote-action-button img {

@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { login as apiLogin } from "../api/users";
+import { login as apiLogin, googleLogin as apiGoogleLogin } from "../api/users";
 import { useAuth } from "../contexts/AuthContext";
 import { Eye, EyeOff } from "lucide-react";
+import { GoogleLogin } from "@react-oauth/google";
 import "./Login.css";
 
 export default function Login() {
@@ -36,6 +37,27 @@ export default function Login() {
       setMsg(errorMsg);
       setShowModal(true); // 에러 발생 시 모달 표시
     }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const data = await apiGoogleLogin(credentialResponse.credential);
+      login(data.user, data.token);
+      setMsg("구글 로그인 성공!");
+      setTimeout(() => {
+        navigate("/");
+      }, 500);
+    } catch (error) {
+      console.error(error);
+      const errorMsg = error.response?.data?.message || "구글 로그인 실패";
+      setMsg(errorMsg);
+      setShowModal(true);
+    }
+  };
+
+  const handleGoogleError = () => {
+    setMsg("구글 로그인 중 오류가 발생했습니다.");
+    setShowModal(true);
   };
 
   // 모달 자동 닫기 (선택 사항)
@@ -103,6 +125,20 @@ export default function Login() {
             </div>
           </div>
         </form>
+
+        <div className="social-login">
+          <div className="divider">
+            <span>또는</span>
+          </div>
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={handleGoogleError}
+            useOneTap
+            theme="outline"
+            size="large"
+            width="100%"
+          />
+        </div>
       </div>
     </div>
   );

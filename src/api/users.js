@@ -10,6 +10,11 @@ export const login = async (form) => {
   return response.data;
 };
 
+export const googleLogin = async (token) => {
+  const response = await instance.post("/users/google-login", { token });
+  return response.data;
+};
+
 export const logout = async () => {
   const response = await instance.post("/users/logout");
   return response.data;

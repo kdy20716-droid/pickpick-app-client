@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">PICKPICK</string>
+    <string name="title_activity_main">PICKPICK</string>
+    <string name="package_name">com.pickpick.app</string>
+    <string name="custom_url_scheme">com.pickpick.app</string>
+</resources>
