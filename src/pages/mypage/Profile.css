@@ -1,0 +1,207 @@
+.profile-container {
+  padding: 40px;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  font-family: "Pretendard", sans-serif;
+}
+
+.breadcrumb {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 20px;
+}
+
+/* 메인 카드 박스 */
+.profile-card {
+  background: #ffffff;
+  border: 1px solid #eee;
+  border-radius: 40px;
+  padding: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* 상단 버튼 */
+.card-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 30px;
+}
+
+.button-group button {
+  padding: 10px 40px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background: white;
+  margin-left: 10px;
+  cursor: pointer;
+  color: #666;
+}
+
+.button-group .btn-save {
+  background-color: #f5f5f5;
+  border: 1px solid #eee;
+}
+
+/* 카드 내부 레이아웃 */
+.card-content {
+  display: flex;
+  gap: 60px;
+}
+
+/* 프로필 사진 섹션 */
+.profile-image-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #fdfdfd;
+  border: 1px solid #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.avatar-placeholder {
+  width: 120px;
+  height: 140px;
+  background-color: #f8b4cc; /* 핑크색 */
+  border-radius: 60px 60px 20px 20px;
+}
+
+.image-buttons {
+  display: flex;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.btn-sub {
+  padding: 12px 20px;
+  background: white;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: #666;
+}
+
+.btn-sub:first-child {
+  border-right: 1px solid #eee;
+}
+
+/* 폼 섹션 */
+.profile-form {
+  flex: 2;
+}
+
+.form-group {
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 15px;
+  color: #444;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.input-field {
+  padding: 15px 25px;
+  border-radius: 30px;
+  border: 1px solid #eee;
+  background-color: #fcfcfc;
+  outline: none;
+  font-size: 14px;
+}
+
+/* 성별 선택 */
+.gender-options {
+  display: flex;
+  border: 1px solid #eee;
+  border-radius: 25px;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.gender-btn {
+  padding: 15px 30px;
+  background: white;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  border-right: 1px solid #eee;
+}
+
+.gender-btn.active {
+  background-color: #fff;
+  color: #333;
+  font-weight: bold;
+}
+
+.gender-btn:last-child {
+  border-right: none;
+}
+
+/* 상태 메시지 (체크 아이콘) */
+.input-with-status {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.status-msg {
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  color: #888;
+}
+
+.status-msg.success i {
+  color: #f8b4cc;
+  margin-right: 5px;
+  border: 2px solid #f8b4cc;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-style: normal;
+  font-weight: bold;
+}
+
+/* 생년월일 / 이메일 그리드 */
+.birth-inputs,
+.email-inputs {
+  display: flex;
+  gap: 15px;
+}
+
+.birth-inputs input,
+.email-inputs input {
+  flex: 1;
+}
+
+.select-box {
+  padding: 0 20px;
+  border-radius: 30px;
+  border: 1px solid #eee;
+  background: #fcfcfc
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%23f8b4cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>')
+    no-repeat right 20px center;
+  display: flex;
+  align-items: center;
+  min-width: 100px;
+  color: #888;
+  cursor: pointer;
+}

@@ -1,0 +1,113 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 120;
+  height: 80px;
+  background: var(--bg);
+}
+
+.header-inner {
+  width: calc(100% - 22px);
+  max-width: 1420px;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space);
+}
+
+.brand {
+  font-family: "Jersey 25", cursive;
+  font-size: 3.5rem;
+  line-height: 1;
+  color: var(--point);
+  letter-spacing: 0.03em;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, calc(var(--layout-vw) * 0.03), 36px);
+  font-size: 1.5rem;
+  font-weight: 300;
+  white-space: nowrap;
+}
+
+.site-nav a:not(.account-link) {
+  color: rgba(17, 17, 17, 0.58);
+  transition:
+    color 180ms ease,
+    font-weight 180ms ease;
+}
+
+.site-nav a:not(.account-link)::after {
+  content: attr(data-label);
+  display: block;
+  height: 0;
+  overflow: hidden;
+  font-weight: 700;
+  visibility: hidden;
+}
+
+.site-nav a:not(.account-link):hover {
+  color: #f7a1c4;
+  font-weight: 700;
+}
+
+.account-link {
+  display: grid;
+  place-items: center;
+  padding: 10px; /* Increased padding to show glow */
+  overflow: visible; /* Ensure glow is not clipped */
+}
+
+.header-profile-avatar {
+  width: clamp(34px, calc(var(--layout-vw) * 0.04), 42px); /* Slightly smaller to fit in header with glow */
+  height: clamp(34px, calc(var(--layout-vw) * 0.04), 42px);
+  border-radius: 50%;
+  position: relative;
+  transition: transform 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-profile-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f1f3f5;
+}
+
+.profile-img-small {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-img-small.default-icon {
+  width: 32px;
+  height: 32px;
+  opacity: 0.6;
+}
+
+.background-glow {
+  position: fixed; /* 페이지의 고정된 배경으로 작동 */
+  top: 80px; /* 헤더의 높이와 정확히 맞물림 */
+  left: 0;
+  right: 0;
+  height: 50px; /* 기본 두께를 조금 더 두껍게 */
+  background: linear-gradient(
+    180deg,
+    rgba(252, 146, 199, 0.45) 0%,
+    rgba(252, 146, 199, 0.2) 50%,
+    rgba(252, 146, 199, 0) 100%
+  );
+  pointer-events: none; /* 클릭을 절대 방해하지 않음 */
+  z-index: 0; /* 배경색 위로 렌더링되도록 0으로 설정 */
+}

@@ -1,0 +1,728 @@
+.comment-modal-layer {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  inset: 0; /* top : 0; left: 0; right: 0; bottom: 0; */
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background-color: white;
+}
+
+.comment-modal-backdrop {
+  display: none;
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(0, 0, 0, 0.56);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.comment-modal-backdrop:hover {
+  background: rgba(
+    0,
+    0,
+    0,
+    0.56
+  ); /* 전역 button:hover의 핑크색 속성 덮어쓰기 */
+}
+
+.comment-modal-layer.is-vote-page {
+  background-color: transparent;
+}
+
+.comment-modal-layer.is-vote-page .comment-modal-backdrop,
+.comment-modal-layer.is-vote-page .comment-modal-backdrop:hover {
+  background: transparent;
+}
+
+.comment-modal {
+  position: fixed;
+  top: var(--comment-modal-top, calc(var(--vote-header-offset, 110px) + 52px));
+  right: var(
+    --comment-modal-right,
+    max(14px, calc((var(--layout-vw) - 1180px) / 2))
+  );
+  left: var(--comment-modal-left, auto);
+  bottom: auto;
+  z-index: 81;
+  display: flex;
+  flex-direction: column;
+  width: min(430px, calc(var(--layout-vw) - 48px));
+  height: var(
+    --comment-modal-height,
+    calc(100dvh - var(--vote-header-offset, 110px) - 56px)
+  );
+  overflow: hidden;
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 26px 72px rgba(0, 0, 0, 0.28);
+  pointer-events: auto;
+  animation: commentPanelEnter 200ms ease-out both;
+}
+
+.comment-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px 16px;
+  border-bottom: 1px solid #eceff2;
+}
+
+.comment-modal-label {
+  display: block;
+  margin-bottom: 4px;
+  color: #d94588;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.comment-modal-header h2 {
+  margin: 0;
+  color: #111111;
+  font-size: 1.15rem;
+  line-height: 1.25;
+}
+
+.comment-modal-close,
+.comment-delete,
+.comment-action,
+.comment-input button,
+.reply-input button {
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+  width: auto; /* Login.css 등 다른 파일의 전역 button width: 100% 설정을 방어합니다 */
+}
+
+.comment-modal-close {
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #f1f3f5;
+  color: #333333;
+  font-weight: 800;
+}
+
+.comment-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px 16px 16px;
+}
+
+.comment-item,
+.reply-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.comment-item + .comment-item {
+  margin-top: 20px;
+}
+
+.comment-avatar {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #76b9ff 0%, #fc92c7 100%);
+  margin-bottom: 4px; /* Space for border tag */
+}
+
+/* 댓글창에서는 관리자 테두리 애니메이션(깜빡임) 및 강한 발광 효과 제거 */
+.comment-avatar.profile-border-admin {
+  animation: none !important;
+}
+
+.comment-avatar.profile-border-admin::after {
+  box-shadow: none !important; /* 태그 하단의 그림자 효과도 제거하여 더 깔끔하게 */
+}
+
+.comment-avatar-small {
+  width: 32px;
+  height: 32px;
+}
+
+.comment-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.comment-top {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.comment-name {
+  color: #191919;
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.comment-time {
+  margin-left: 8px;
+  color: #8c939c;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.comment-delete {
+  flex-shrink: 0;
+  padding: 5px 8px;
+  border-radius: 8px;
+  background: transparent;
+  color: #9aa0a6;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.comment-delete:hover,
+.comment-modal-close:hover,
+.comment-action:hover {
+  color: #d94588;
+}
+
+.name-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.time-label {
+  flex-shrink: 0;
+  font-size: 12px;
+  color: #9aa0a6;
+  white-space: nowrap;
+}
+
+.comment-text {
+  margin: 6px 0 0;
+  color: #333333;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.menu {
+  color: #888;
+  cursor: pointer;
+}
+
+.comment-menu-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 44px;
+}
+
+.menu-button {
+  border: none;
+  background: none;
+  padding: 0;
+  color: #888;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.comment-delete {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid #eceff2;
+  background: #fff;
+  border-radius: 10px;
+  padding: 8px 12px;
+  min-width: 88px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #dc3545;
+  white-space: nowrap;
+  text-align: center;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  z-index: 20;
+}
+
+.trash-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1c1e21;
+  margin: 0 0 6px;
+  white-space: pre-wrap; /* 줄바꿈 허용 */
+  text-align: left;
+  width: 100%;
+}
+
+/* 좋아요, 답글 버튼 영역 */
+.comment-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.actions {
+  display: flex;
+  gap: 15px;
+  font-size: 12px;
+  color: #65676b;
+  font-weight: 600;
+}
+
+.like-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dislike-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.comment-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.like-icon {
+  width: 18px;
+  height: 18px;
+  color: #0f0f0f;
+  flex-shrink: 0;
+  transition: color 0.18s ease;
+}
+
+.like-icon path {
+  transition:
+    fill 0.18s ease,
+    stroke 0.18s ease;
+}
+
+.dislike-icon {
+  width: 18px;
+  height: 18px;
+  color: #0f0f0f;
+  flex-shrink: 0;
+  transition: color 0.18s ease;
+}
+
+.dislike-icon path {
+  transition:
+    fill 0.18s ease,
+    stroke 0.18s ease;
+}
+
+.comment-icon {
+  width: 18px;
+  height: 18px;
+  color: #6f7680;
+  flex-shrink: 0;
+  transition: color 0.18s ease;
+}
+
+.comment-icon path {
+  transition:
+    fill 0.18s ease,
+    stroke 0.18s ease;
+}
+
+.actions span {
+  cursor: pointer;
+}
+
+.action-button {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  font-weight: inherit;
+  cursor: pointer;
+}
+
+.action-button:hover {
+  text-decoration: underline;
+}
+
+.like-button.is-active .like-icon {
+  color: #e53935;
+}
+
+.dislike-button.is-active .dislike-icon {
+  color: #2f6df6;
+}
+
+.comment-button.is-active .comment-icon {
+  color: #0f0f0f;
+}
+
+.comment-icon.is-filled path {
+  fill: currentColor;
+}
+
+.like-icon.is-filled path,
+.dislike-icon.is-filled path {
+  fill: currentColor;
+}
+
+/* 답글 보기 버튼 */
+.reply {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 13px;
+  color: #65676b;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.18s ease;
+}
+
+.reply::before {
+  content: "";
+  display: block;
+  flex-shrink: 0;
+  width: 20px;
+  border-top: 1px solid #ccc;
+  transition: border-color 0.18s ease;
+}
+
+.reply.is-active {
+  color: #0f0f0f;
+}
+
+.reply.is-active::before {
+  border-color: #0f0f0f;
+}
+
+.reply-list {
+  width: 100%;
+  margin-top: 12px;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reply-input {
+  width: 100%;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+}
+
+.reply-input input {
+  flex: 1 1 auto;
+  min-width: 0;
+  background-color: #f0f2f5;
+  border: 1px solid #e2e5e9;
+  padding: 10px 15px;
+  border-radius: 20px;
+  outline: none;
+  font-size: 13px;
+  color: #000;
+}
+
+.reply-input input:focus {
+  background-color: #e4e6eb;
+}
+
+.reply-submit {
+  flex-shrink: 0;
+  width: 48px;
+  min-width: 48px;
+  height: 38px;
+  padding: 0 6px;
+  border: none;
+  border-radius: 10px;
+  background: #ff8db5;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 38px;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.reply-submit:hover,
+.reply-submit:focus-visible {
+  background: #ff74a8;
+  text-decoration: none;
+  outline: none;
+}
+
+.reply-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.comment-action {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  background: transparent;
+  color: #69707a;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.comment-action svg {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+.comment-action-active {
+  color: #d94588;
+}
+
+.comment-action.action-like.is-active {
+  color: #ff3b30;
+}
+
+.comment-action.action-like.is-active svg {
+  fill: #ff3b30;
+  stroke: #ff3b30;
+}
+
+.comment-action.action-dislike.is-active {
+  color: #007aff;
+}
+
+.comment-action.action-dislike.is-active svg {
+  fill: #007aff;
+  stroke: #007aff;
+}
+
+.reply-block {
+  margin-top: 14px;
+  padding-left: 4px;
+}
+
+.reply-item + .reply-item {
+  margin-top: 12px;
+}
+
+.reply-input,
+.comment-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.reply-input {
+  margin-top: 14px;
+}
+
+.reply-input input,
+.comment-input input {
+  min-width: 0;
+  flex: 1 1 auto;
+  border: 1px solid #e2e5e9;
+  border-radius: 8px;
+  background: #f7f8fa;
+  color: #111111;
+  font: inherit;
+  outline: none;
+}
+
+.reply-input input {
+  height: 38px;
+  padding: 0 12px;
+  font-size: 0.86rem;
+}
+
+.comment-input {
+  padding: 14px 16px 18px; /* Increased bottom padding */
+  border-top: 1px solid #eceff2;
+  background: #ffffff;
+}
+
+.comment-input input {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
+  background-color: #f0f2f5;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  outline: none;
+  font-size: 14px;
+  color: #000;
+}
+
+.reply-input input:focus,
+.comment-input input:focus {
+  border-color: #fc92c7;
+  background: #ffffff;
+}
+
+.reply-input button,
+.comment-input button {
+  flex-shrink: 0;
+  height: 38px;
+  padding: 0 13px;
+  border-radius: 8px;
+  background: #d94588;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.comment-input button {
+  height: 42px;
+}
+
+@keyframes commentPanelEnter {
+  from {
+    opacity: 0;
+    transform: translateX(30px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.comment-modal-layer.is-overlay-mode .comment-modal-backdrop {
+  display: block;
+}
+
+.comment-modal-layer.is-vote-page.is-overlay-mode .comment-modal-backdrop,
+.comment-modal-layer.is-vote-page.is-overlay-mode .comment-modal-backdrop:hover {
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.comment-modal-layer.is-overlay-mode .comment-modal {
+  left: auto;
+  right: 50%;
+  transform: translateX(50%);
+  animation-name: commentPanelDropIn;
+}
+
+@media (max-width: 0px) {
+  .comment-modal-backdrop {
+    display: block;
+  }
+
+  .comment-modal {
+    left: auto;
+    right: 50%;
+    transform: translateX(50%);
+    animation-name: commentPanelDropIn;
+  }
+}
+
+/* 중앙 정렬 모드 (Result.jsx 등에서 사용) */
+.comment-modal-layer.is-centered .comment-modal-backdrop {
+  display: block;
+  pointer-events: auto;
+}
+
+.comment-modal-layer.is-centered .comment-modal {
+  top: 50%;
+  left: 50%;
+  right: auto;
+  transform: translate(-50%, -50%);
+  height: min(700px, 80vh);
+  animation: commentCenteredEnter 300ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes commentCenteredEnter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes commentPanelDropIn {
+  from {
+    opacity: 0;
+    transform: translate(50%, -14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(50%, 0);
+  }
+}
+
+@media (max-width: 0px) {
+  .comment-modal {
+    width: min(430px, calc(var(--layout-vw) - 24px));
+  }
+
+  .comment-modal-header,
+  .comment-list {
+    padding-inline: 16px;
+  }
+
+  .comment-input {
+    padding-inline: 12px;
+  }
+}
+
+.comment-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 48px;
+  min-width: 48px;
+  height: 36px;
+  padding: 0 6px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 36px;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  background: #ff8db5;
+}
+
+.comment-submit:hover,
+.comment-submit:focus-visible {
+  background: #ff74a8;
+  outline: none;
+}

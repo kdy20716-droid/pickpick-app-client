@@ -1,0 +1,189 @@
+.report-modal-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.report-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: none;
+  cursor: pointer;
+}
+
+.report-modal-backdrop:hover {
+  background: rgba(0, 0, 0, 0.45); /* 전역 버튼 호버의 핑크색 방지 */
+}
+
+.report-modal {
+  position: relative;
+  width: 90%;
+  max-width: 480px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: reportModalFadeIn 0.25s ease-out;
+}
+
+@keyframes reportModalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.report-modal-header {
+  padding: 24px 28px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.report-modal-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.report-modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111111;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
+
+.report-modal-close {
+  background: none;
+  border: none;
+  color: #8d8d8d;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.report-modal-close:hover {
+  color: #111111;
+}
+
+.report-content {
+  padding: 24px 28px;
+  overflow-y: auto;
+  max-height: 60vh;
+}
+
+.report-guide {
+  margin: 0 0 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.report-reasons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.report-reason-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.report-reason-item:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+.report-reason-item input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #444;
+}
+
+.report-reason-item span {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.report-other-input {
+  width: 100%;
+  min-height: 100px;
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 0.95rem;
+  resize: vertical;
+  outline: none;
+}
+
+.report-other-input:focus {
+  border-color: #888;
+  background: #fff;
+}
+
+.report-footer {
+  padding: 20px 28px 24px;
+  display: flex;
+  gap: 12px;
+}
+
+.report-cancel-btn {
+  flex: 1;
+  height: 52px;
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+}
+
+.report-submit-btn {
+  flex: 1.5;
+  height: 52px;
+  background: #333;
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.report-submit-btn:hover {
+  background: #111;
+}

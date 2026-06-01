@@ -1,0 +1,883 @@
+/* 전역 설정 */
+
+/* 전체 레이아웃 */
+.wrapper {
+  display: flex;
+  gap: 60px;
+  padding-right: 60px;
+  align-items: flex-start;
+}
+
+/* 사이드바 스타일 */
+.sidebar {
+  width: 220px;
+  min-width: 220px;
+  background: #fff;
+  border-radius: 0 35px 35px 0;
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100vh - 80px);
+  box-shadow: 5px 0 30px rgba(0, 0, 0, 0.02);
+
+  /* 스크롤 고정 설정 */
+  position: sticky;
+  top: 80px;
+  z-index: 5;
+  transition:
+    width 0.3s ease,
+    min-width 0.3s ease;
+  overflow: hidden;
+}
+
+.navLinks a,
+.navLinks button {
+  display: block;
+  color: #bbb;
+  font-weight: bold;
+  margin-bottom: 40px;
+  font-size: 19px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.navLinks a.active {
+  color: #777;
+}
+
+.navLinks button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sidebarUserWrapper {
+  padding-top: 30px;
+  border-top: 2px solid #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.logoutBtn {
+  width: 100%;
+  padding: 10px 16px;
+  background-color: #f8bbd0;
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 8px;
+  font-family: "REM", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.logoutBtn:hover {
+  background-color: #f7a9c4;
+  transform: translateY(-2px);
+}
+
+.deleteBtn {
+  width: 100%;
+  padding: 10px 16px;
+  background-color: #f8bbd0;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-family: "REM", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    transform 0.2s;
+}
+
+.deleteBtn:hover {
+  background-color: #f7a9c4;
+  transform: translateY(-2px);
+}
+
+/* 메인 컨텐츠 영역 */
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+}
+
+/* 상단 검색바 로우 */
+.topSearchRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.breadcrumb {
+  color: #bbb;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.searchBar {
+  position: relative;
+  width: 65%;
+  max-width: 700px;
+}
+
+.searchBar input {
+  width: 100%;
+  padding: 14px 30px;
+  border-radius: 40px;
+  border: none;
+  background: #fff;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.04);
+  outline: none;
+}
+
+.searchIcon {
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #f8bbd0;
+  font-size: 20px;
+}
+
+/* 내부 카드 레이아웃 */
+.contentBody {
+  display: flex;
+  gap: 35px;
+  width: 100%;
+}
+
+.leftPanel {
+  flex: 2.3;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.rightPanel {
+  flex: 1;
+  min-width: 340px;
+}
+
+/* 공통 카드 스타일 */
+.card {
+  background: #fff;
+  border-radius: 35px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.profileHeader {
+  display: flex;
+  gap: 30px;
+}
+
+.profileImgCard {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  flex-shrink: 0;
+  overflow: visible; /* Ensure border glow shows */
+}
+
+.circleBig {
+  width: 140px;
+  height: 140px;
+  background: #fde8f0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Changed from align-items: flex-end */
+  transition: transform 0.3s ease;
+}
+
+.profileImgCard:hover .circleBig {
+  transform: scale(1.05);
+}
+
+.silhouette {
+  width: 90px;
+  height: 90px;
+  background: #f8bbd0;
+  border-radius: 50% 50% 0 0;
+  position: relative;
+}
+
+.silhouette::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  left: 17px;
+  width: 56px;
+  height: 56px;
+  background: #f8bbd0;
+  border-radius: 50%;
+}
+
+.camIconWrapper {
+  position: absolute;
+  bottom: 35px;
+  right: 35px;
+}
+
+.camIcon {
+  background: #fff;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #fdf7f9;
+  font-size: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}
+
+.nicknameCard {
+  flex: 1;
+  padding: 40px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.lvBadge {
+  color: #bbb;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qMark {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  color: #f8bbd0;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  border: 1px solid #fde8f0;
+}
+
+.playBtn {
+  color: #ddd;
+  font-size: 14px;
+  margin-left: 5px;
+}
+
+.nickname {
+  font-size: 48px;
+  color: #666;
+  font-weight: bold;
+}
+
+.gearIcon {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  width: auto;
+  height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #f8bbd0;
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  outline: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gearIcon:focus,
+.gearIcon:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.gearIcon:hover {
+  background: transparent;
+  color: #f1a0c0;
+  transform: rotate(180deg) scale(1.1);
+}
+
+.menuList {
+  padding: 50px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+.menuItem {
+  font-size: 20px;
+  font-weight: bold;
+  color: #bbb;
+  cursor: pointer;
+}
+
+.menuItem.active {
+  color: #777;
+}
+
+.langRow {
+  display: flex;
+  align-items: center;
+}
+
+.langSel {
+  margin-left: 100px;
+  display: flex;
+  gap: 50px;
+}
+
+.selOn {
+  color: #888;
+}
+
+.selOff {
+  color: #eee;
+}
+
+/* 오른쪽 알림 패널 디테일 */
+.notifCard {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.panelTitle {
+  text-align: center;
+  color: #888;
+  margin-bottom: 40px;
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+
+.msgBubbleContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 25px;
+}
+
+.msgPink {
+  background: #fde8f0;
+  padding: 22px 30px;
+  border-radius: 30px;
+  width: 90%;
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+  text-align: center;
+}
+
+.msgReply {
+  font-size: 13px;
+  color: #ccc;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  padding-right: 15px;
+}
+
+.mIcon {
+  background: #fde8f0;
+  color: #f0a1c0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+
+.msgGray {
+  background: #f5f5f5;
+  padding: 18px;
+  border-radius: 25px;
+  text-align: center;
+  margin-bottom: 18px;
+  color: #999;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.trendingBox {
+  background: #f5f5f5;
+  border-radius: 30px;
+  padding: 30px;
+  margin-top: 20px;
+  flex: 1;
+}
+
+.trendingTitle {
+  text-align: center;
+  color: #aaa;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.rankRow {
+  margin-bottom: 20px;
+}
+
+.rankLabel {
+  font-size: 13px;
+  color: #bbb;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.vsFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.charBox {
+  width: 44%;
+  height: 80px;
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.charBox img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vsTxt {
+  color: #ddd;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.bottomCheck {
+  text-align: right;
+  color: #f8bbd0;
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.checkCircle {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #f8bbd0;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+
+/* Custom Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modalContent {
+  background-color: #fff;
+  padding: 35px 40px;
+  border-radius: 24px;
+  width: 400px;
+  max-width: calc(var(--layout-vw) * 0.9);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  animation: slideUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modalTitle {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 22px;
+}
+
+.modalText {
+  margin: 0 0 30px 0;
+  color: #666;
+  font-size: 15px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.modalActions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.modalCancelBtn {
+  flex: 1;
+  padding: 12px 0;
+  border: none;
+  background-color: #f1f3f5;
+  color: #888;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.modalCancelBtn:hover {
+  background-color: #e9ecef;
+}
+
+.modalConfirmBtn {
+  flex: 1;
+  padding: 12px 0;
+  border: none;
+  background-color: #333;
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.modalConfirmBtn:hover {
+  background-color: #111;
+}
+
+.modalDangerBtn {
+  flex: 1;
+  padding: 12px 0;
+  border: none;
+  background-color: #ff4d4f;
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.modalDangerBtn:hover {
+  background-color: #e53935;
+}
+
+/* 로딩 스피너 */
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #fde8f0;
+  border-top: 4px solid #f1a0c0;
+  border-radius: 50%;
+  margin: 0 auto 15px;
+  animation: spin 1s linear infinite;
+}
+
+.loadingWrapper {
+  text-align: center;
+  padding: 100px 0;
+  color: #bbb;
+  width: 100%;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+}
+
+.animateEnter {
+  animation: slideInRight 0.3s ease-out forwards;
+}
+
+.animateExit {
+  animation: slideOutLeft 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Support Bookmark Button */
+.supportButton {
+  position: fixed;
+  bottom: 40px;
+  left: -200px; /* Hidden much deeper to ensure the edge is never seen */
+  width: 320px; /* Extra long shape */
+  height: 44px;
+  background-color: #f8bbd0;
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 30px;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  border-radius: 0 12px 12px 0;
+  box-shadow: 4px 0 15px rgba(248, 187, 208, 0.3);
+  transition:
+    transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    background-color 0.3s ease;
+  z-index: 9999;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.supportButton:hover {
+  transform: translateX(40px); /* Subtle slide out */
+  background-color: #f48fb1;
+}
+
+.modalCloseBtn {
+  margin-top: 20px;
+  padding: 8px 20px;
+  background: transparent;
+  border: 1px solid #eee;
+  color: #aaa;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.modalCloseBtn:hover {
+  background: #f9f9f9;
+  color: #888;
+}
+
+/* 등업 축하 모달 및 애니메이션 */
+.promoOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  overflow: hidden;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.promoContent {
+  background-color: #fff;
+  padding: 50px 60px;
+  border-radius: 40px;
+  text-align: center;
+  position: relative;
+  z-index: 2010;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  animation: celebrateScale 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.promoEmoji {
+  font-size: 80px;
+  margin-bottom: 20px;
+  animation: bounce 1s infinite;
+}
+
+.promoTitle {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.promoText {
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.oldGrade {
+  color: #bbb;
+}
+
+.arrow {
+  color: #f8bbd0;
+  font-weight: bold;
+}
+
+.newGrade {
+  color: #f1a0c0;
+  font-weight: bold;
+}
+
+.promoSubText {
+  color: #999;
+  font-size: 15px;
+  margin-bottom: 35px;
+}
+
+.promoBtn {
+  background-color: #f8bbd0;
+  color: #fff;
+  border: none;
+  padding: 15px 50px;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.promoBtn:hover {
+  background-color: #f1a0c0;
+  transform: scale(1.05);
+}
+
+/* 폭죽(컨페티) 효과 */
+.confettiContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.confetti {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: #f8bbd0;
+  top: -20px;
+  border-radius: 2px;
+  animation: fall linear forwards;
+}
+
+.confetti:nth-child(3n) { background-color: #fde8f0; }
+.confetti:nth-child(3n+1) { background-color: #f1a0c0; }
+.confetti:nth-child(3n+2) { background-color: #fff; }
+
+.confetti:nth-child(1) { left: 10%; animation-duration: 3s; animation-delay: 0s; }
+.confetti:nth-child(2) { left: 20%; animation-duration: 4s; animation-delay: 0.5s; }
+.confetti:nth-child(3) { left: 30%; animation-duration: 3.5s; animation-delay: 0.2s; }
+.confetti:nth-child(4) { left: 40%; animation-duration: 4.5s; animation-delay: 0.8s; }
+.confetti:nth-child(5) { left: 50%; animation-duration: 3.8s; animation-delay: 0.3s; }
+.confetti:nth-child(6) { left: 60%; animation-duration: 4.2s; animation-delay: 0.6s; }
+.confetti:nth-child(7) { left: 70%; animation-duration: 3.2s; animation-delay: 0.1s; }
+.confetti:nth-child(8) { left: 80%; animation-duration: 4.8s; animation-delay: 0.9s; }
+.confetti:nth-child(9) { left: 90%; animation-duration: 3.6s; animation-delay: 0.4s; }
+.confetti:nth-child(10) { left: 15%; animation-duration: 4.1s; animation-delay: 1.2s; }
+.confetti:nth-child(11) { left: 25%; animation-duration: 3.3s; animation-delay: 1.5s; }
+.confetti:nth-child(12) { left: 35%; animation-duration: 4.7s; animation-delay: 1.8s; }
+.confetti:nth-child(13) { left: 45%; animation-duration: 3.9s; animation-delay: 2.1s; }
+.confetti:nth-child(14) { left: 55%; animation-duration: 4.4s; animation-delay: 2.4s; }
+.confetti:nth-child(15) { left: 65%; animation-duration: 3.7s; animation-delay: 2.7s; }
+.confetti:nth-child(16) { left: 75%; animation-duration: 4.6s; animation-delay: 3s; }
+.confetti:nth-child(17) { left: 85%; animation-duration: 3.4s; animation-delay: 3.3s; }
+.confetti:nth-child(18) { left: 95%; animation-duration: 4.3s; animation-delay: 3.6s; }
+.confetti:nth-child(19) { left: 5%; animation-duration: 3.1s; animation-delay: 3.9s; }
+.confetti:nth-child(20) { left: 50%; animation-duration: 4.9s; animation-delay: 4.2s; }
+
+@keyframes celebrateScale {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh) rotate(720deg);
+  }
+}

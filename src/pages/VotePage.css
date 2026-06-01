@@ -1,0 +1,1246 @@
+.vote-page {
+  --vote-header-offset: 110px;
+  --vote-min-height: 600px;
+  --vote-page-width: 1180px;
+  --vote-page-gutter: 24px;
+  --vote-page-z-index: 0;
+  --vote-action-bg: rgba(255, 255, 255, 0.95);
+  --vote-action-shadow: 0 14px 28px rgba(17, 17, 17, 0.08);
+  --vote-action-icon-opacity: 0.56;
+  --vote-action-hover-shadow: 0 16px 30px rgba(252, 146, 199, 0.22);
+  --vote-action-hover-icon-opacity: 1;
+  --vote-action-hover-icon-filter: invert(72%) sepia(20%) saturate(1351%)
+    hue-rotate(290deg) brightness(104%) contrast(99%);
+  --vote-action-active-bg: linear-gradient(180deg, #ffb6db 0%, #fc92c7 100%);
+  --vote-action-active-shadow: 0 16px 32px rgba(252, 146, 199, 0.34);
+  --vote-action-active-icon-filter: brightness(0) invert(1);
+  --vote-filter-panel-z-index: 70;
+  --vote-filter-panel-min-width: 150px;
+  --vote-filter-panel-fallback-left: 70px;
+  --vote-filter-panel-top: var(--vote-filter-button-top);
+  --vote-filter-panel-left: max(
+    0px,
+    calc((var(--layout-vw) - 1420px) / 2 + 11px)
+  );
+  --vote-filter-panel-width: max(
+    var(--vote-filter-panel-min-width),
+    calc(
+      var(--vote-filter-button-left) + var(--vote-filter-button-size) + 4px -
+        var(--vote-filter-panel-left)
+    )
+  );
+  --vote-filter-panel-height: calc(
+    100dvh - var(--vote-filter-panel-top) - 44px
+  );
+  --vote-filter-panel-radius: 24px;
+  --vote-filter-panel-bg: rgba(255, 255, 255, 0.98);
+  --vote-filter-panel-shadow: 0 22px 60px rgba(17, 17, 17, 0.08);
+  --vote-filter-button-z-index: 90;
+  --vote-filter-button-size: 64px;
+  --vote-filter-button-icon-size: 42px;
+  --vote-filter-button-top: calc(var(--vote-header-offset) + 46px);
+  --vote-filter-button-left: max(
+    0px,
+    calc((var(--layout-vw) - var(--vote-page-width)) / 2 + 26px)
+  );
+  --vote-filter-gap: 25px;
+  --vote-sheet-padding: 20px 20px 18px;
+  --vote-sheet-radius: 22px;
+  --vote-sheet-bg: rgba(255, 255, 255, 0.96);
+  --vote-sheet-shadow: 0 22px 60px rgba(17, 17, 17, 0.08);
+  --vote-sheet-active-shadow: 0 28px 72px rgba(17, 17, 17, 0.12);
+  --vote-sheet-title-size: 3rem;
+  --vote-choice-gap: 16px;
+  --vote-choice-radius: 20px;
+  --vote-choice-bg: #f4f0ea;
+  --vote-choice-name-size: 2.65rem;
+  --vote-choice-selected-border: var(--point, #fc92c7);
+  --vote-result-bar-height: 18px;
+  --vote-result-left-color: linear-gradient(90deg, #76b9ff 0%, #9bc7ff 100%);
+  --vote-result-right-color: linear-gradient(90deg, #fc92c7 0%, #ffabd5 100%);
+  position: relative;
+  z-index: var(--vote-page-z-index);
+  isolation: isolate;
+  width: var(--vote-page-width);
+  min-width: var(--vote-page-width);
+  margin: 0 auto;
+  height: calc(100vh - var(--vote-header-offset));
+  padding: 0;
+  overflow: visible;
+}
+
+.vote-page.has-comment-modal {
+  overflow: visible;
+}
+
+.vote-page .comment-modal-layer,
+.vote-page .comment-modal-backdrop,
+.vote-page .comment-modal-backdrop:hover {
+  background: transparent;
+}
+
+.vote-filter-panel {
+  --filter-close-text: #111111;
+  --filter-close-hover-text: #fc92c7;
+  --filter-chip-bg: #ffffff;
+  --filter-chip-text: #8d8d8d;
+  --filter-chip-border: rgba(17, 17, 17, 0.42);
+  --filter-chip-shadow: none;
+  --filter-chip-hover-bg: #ffffff;
+  --filter-chip-hover-text: #fc92c7;
+  --filter-chip-hover-border: #fc92c7;
+  --filter-chip-hover-shadow: 0 8px 18px rgba(252, 146, 199, 0.16);
+  --filter-chip-active-bg: #fc92c7;
+  --filter-chip-active-text: #fff;
+  --filter-chip-active-border: #fc92c7;
+  --filter-chip-active-shadow: 0 8px 18px rgba(252, 146, 199, 0.24);
+  position: fixed;
+  top: var(--vote-filter-panel-top);
+  left: var(--vote-filter-panel-left);
+  z-index: var(--vote-filter-panel-z-index);
+  display: flex;
+  flex-direction: column;
+  width: var(--vote-filter-panel-width, var(--vote-filter-panel-min-width));
+  height: var(--vote-filter-panel-height);
+  max-height: calc(100dvh - var(--vote-header-offset) - 22px);
+  padding: 11px 10px 14px;
+  overflow: hidden;
+  border-radius: var(--vote-filter-panel-radius);
+  background: var(--vote-filter-panel-bg);
+  box-shadow: var(--vote-filter-panel-shadow);
+  animation: filterPanelEnter 180ms ease both;
+}
+
+.vote-filter-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  min-height: 48px;
+  margin-bottom: 14px;
+  padding: 0 10px;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+}
+
+.vote-filter-header h2 {
+  margin: 0;
+  color: #111111;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.vote-filter-close {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px !important;
+  min-width: 28px !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 8px; /* 모서리가 둥근 네모 */
+  appearance: none;
+  background: #fc92c7 !important; /* 픽픽 대표 핑크색 */
+  box-shadow: 0 2px 6px rgba(252, 146, 199, 0.24);
+  color: #ffffff; /* 하얀색 X */
+  font-family: inherit;
+  line-height: 1;
+  transform: translateY(-50%);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vote-filter-close:hover {
+  background: #e881b5 !important; /* 마우스 올리면 더 진한 핑크 */
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 4px 10px rgba(252, 146, 199, 0.32);
+}
+
+.vote-filter-close svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2.5px;
+}
+
+.vote-filter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 0 2px;
+  scrollbar-width: none;
+}
+
+.vote-filter-list::-webkit-scrollbar {
+  display: none;
+}
+
+.vote-filter-chip {
+  flex: 0 0 auto;
+  width: 100%;
+  min-height: 43px;
+  padding: 0 18px;
+  border: 1px solid var(--filter-chip-border);
+  border-radius: 999px;
+  background: var(--filter-chip-bg);
+  color: var(--filter-chip-text);
+  box-shadow: var(--filter-chip-shadow);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.vote-filter-chip:hover {
+  transform: translateY(-1px);
+  border-color: var(--filter-chip-hover-border);
+  background: var(--filter-chip-hover-bg);
+  color: var(--filter-chip-hover-text);
+  box-shadow: var(--filter-chip-hover-shadow);
+}
+
+.vote-filter-chip.is-active {
+  border-color: var(--filter-chip-active-border);
+  background: var(--filter-chip-active-bg);
+  color: var(--filter-chip-active-text);
+  box-shadow: var(--filter-chip-active-shadow);
+}
+
+@keyframes filterPanelEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 100px 20px;
+  color: #888;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.vote-layout {
+  --vote-rail-gap: 25px;
+  --vote-action-button-size: 72px;
+  --vote-rail-size: calc(
+    var(--vote-action-button-size) * 4 + var(--vote-rail-gap) * 3
+  );
+  --vote-sheet-glow-space: 22px;
+  --vote-sheet-extra-height: 41px;
+  --vote-action-space: calc(
+    var(--vote-action-button-size) + var(--vote-rail-gap)
+  );
+  --vote-sheet-fixed-width: 950px;
+  --vote-filter-reserve-space: 40px;
+  --vote-side-balance: max(
+    var(--vote-filter-reserve-space),
+    clamp(
+      0px,
+      calc((var(--layout-vw) - var(--vote-sheet-fixed-width)) * 0.3),
+      var(--vote-action-space)
+    )
+  );
+  --vote-sheet-width: var(--vote-sheet-fixed-width);
+  --vote-feed-width: calc(
+    var(--vote-sheet-width) + var(--vote-action-space) +
+      var(--vote-side-balance) + var(--vote-sheet-glow-space) +
+      var(--vote-sheet-glow-space)
+  );
+  width: 100%;
+  height: 100%;
+  min-height: var(--vote-min-height);
+  display: flex;
+  justify-content: center;
+  transition: transform 240ms ease;
+}
+
+.vote-page.has-comment-modal .vote-layout {
+  --vote-side-balance: 52px;
+  transform: translateX(var(--vote-comment-group-shift, 0px));
+  transition: none;
+}
+
+.vote-feed {
+  position: relative;
+  z-index: 0;
+  width: var(--vote-feed-width);
+  min-width: var(--vote-feed-width);
+  height: 100%;
+  padding: var(--vote-sheet-glow-space);
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-padding-block: var(--vote-sheet-glow-space);
+  scroll-behavior: smooth;
+  overscroll-behavior-y: contain;
+  scrollbar-width: none;
+}
+
+.vote-page.is-entering-from-main .vote-feed {
+  animation: voteFeedEnterFromMain 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.vote-page.is-entering-from-main .vote-feed-item:first-child .vote-sheet {
+  animation: voteSheetSettleFromMain 680ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.vote-feed::-webkit-scrollbar {
+  display: none;
+}
+
+.vote-feed-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  height: calc(
+    100% - var(--vote-sheet-glow-space) * 2 + var(--vote-sheet-extra-height)
+  );
+  min-height: calc(
+    100% - var(--vote-sheet-glow-space) * 2 + var(--vote-sheet-extra-height)
+  );
+  padding: 30px var(--vote-action-space) 23px var(--vote-side-balance);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  flex: 0 0
+    calc(
+      100% - var(--vote-sheet-glow-space) * 2 + var(--vote-sheet-extra-height)
+    );
+}
+
+.vote-sheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  width: var(--vote-sheet-width);
+  padding: var(--vote-sheet-padding);
+  border-radius: var(--vote-sheet-radius);
+  background: var(--vote-sheet-bg);
+  box-shadow: var(--vote-sheet-shadow);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition:
+    transform 260ms ease,
+    box-shadow 260ms ease,
+    opacity 260ms ease;
+}
+
+.vote-feed-item:not(.is-active) .vote-sheet {
+  opacity: 0.94;
+}
+
+.vote-feed-item.is-active .vote-sheet {
+  transform: scale(1.01);
+  box-shadow: var(--vote-sheet-active-shadow);
+}
+
+.vote-sheet::before {
+  content: "";
+  position: absolute;
+  inset: -22px;
+  z-index: -1;
+  border-radius: 34px;
+  filter: blur(12px);
+}
+
+.vote-sheet-title {
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 132px;
+  text-align: center;
+  font-size: var(--vote-sheet-title-size);
+  font-weight: 700;
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.vote-deadline-badge {
+  position: absolute;
+  top: 20px;
+  left: 22px;
+  z-index: 4;
+  min-width: 118px;
+  max-width: 170px;
+  padding: 6px 10px;
+  border: 1px solid rgba(252, 146, 199, 0.42);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  color: #d94588;
+  font-size: 0.76rem;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+  text-align: center;
+  box-shadow: 0 8px 18px rgba(252, 146, 199, 0.14);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.vote-sheet-match {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--vote-choice-gap);
+  padding-top: 16px;
+  flex: 1;
+  min-height: 0;
+  align-items: stretch;
+  transition:
+    min-height 220ms ease,
+    padding-bottom 220ms ease;
+}
+
+.vote-sheet.has-results .vote-sheet-match {
+  flex: 1 1 0;
+  min-height: 0;
+}
+
+.vote-choice {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 5px solid transparent;
+  border-radius: var(--vote-choice-radius);
+  background: var(--vote-choice-bg);
+  cursor: pointer;
+  min-height: 0;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    filter 180ms ease;
+}
+
+.vote-choice-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--vote-choice-radius) - 3px);
+  overflow: hidden;
+  min-height: 0;
+}
+
+.vote-choice:hover {
+  background: var(--vote-choice-bg);
+  transform: translateY(-3px);
+}
+
+.vote-choice:hover .vote-choice-overlay {
+  background: transparent;
+}
+
+.vote-sheet.has-results .vote-choice:hover {
+  transform: none;
+}
+
+.vote-sheet.has-results .vote-choice.is-selected:hover {
+  transform: translateY(-3px);
+}
+
+.vote-choice img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  transition: transform 220ms ease;
+}
+
+.vote-choice-image-fallback {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(255, 255, 255, 0.72),
+      transparent 32%
+    ),
+    linear-gradient(135deg, #f3c967 0%, #df6d3c 48%, #3b1f14 100%);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 7rem;
+  font-weight: 900;
+  transition: transform 220ms ease;
+}
+
+.tone-dark .vote-choice-image-fallback {
+  background:
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255, 255, 255, 0.24),
+      transparent 30%
+    ),
+    linear-gradient(135deg, #16233d 0%, #39637c 48%, #d9c18b 100%);
+}
+
+.vote-choice:hover img {
+  transform: scale(1.03);
+}
+
+.vote-choice:hover .vote-choice-image-fallback {
+  transform: scale(1.03);
+}
+
+.vote-sheet.has-results .vote-choice:hover img {
+  transform: none;
+}
+
+.vote-sheet.has-results .vote-choice:hover .vote-choice-image-fallback {
+  transform: none;
+}
+
+.vote-choice-overlay {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  pointer-events: none;
+}
+
+.vote-choice-name {
+  --vote-name-outline-size: 2px;
+  --vote-name-outline-negative-size: -2px;
+  --vote-name-accent-shadow: 0 3px 12px rgba(255, 255, 255, 0.28);
+  margin: 0;
+  position: absolute;
+  right: 0;
+  bottom: 44px; /* 14px에서 30px 올려서 44px로 수정 */
+  left: 0;
+  box-sizing: border-box;
+  width: auto;
+  padding: 0 18px;
+  display: -webkit-box;
+  pointer-events: none;
+  max-height: calc(100% - 36px);
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  text-align: center;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  white-space: normal;
+  font-size: min(
+    var(--vote-choice-name-size),
+    var(--vote-choice-name-fit-size, var(--vote-choice-name-size))
+  );
+  font-weight: 900;
+  line-height: 1.08;
+  color: #ffffff;
+  text-shadow:
+    var(--vote-name-outline-negative-size)
+      var(--vote-name-outline-negative-size) 0 #111111,
+    0 var(--vote-name-outline-negative-size) 0 #111111,
+    var(--vote-name-outline-size) var(--vote-name-outline-negative-size) 0
+      #111111,
+    var(--vote-name-outline-size) 0 0 #111111,
+    var(--vote-name-outline-size) var(--vote-name-outline-size) 0 #111111,
+    0 var(--vote-name-outline-size) 0 #111111,
+    var(--vote-name-outline-negative-size) var(--vote-name-outline-size) 0
+      #111111,
+    var(--vote-name-outline-negative-size) 0 0 #111111,
+    var(--vote-name-accent-shadow);
+}
+
+.tone-blue .vote-choice-name {
+  --vote-name-accent-shadow:
+    0 0 18px rgba(71, 140, 255, 0.4), 0 3px 12px rgba(255, 255, 255, 0.24);
+}
+
+.tone-pink .vote-choice-name {
+  --vote-name-accent-shadow:
+    0 0 18px rgba(255, 91, 91, 0.4), 0 3px 12px rgba(255, 255, 255, 0.24);
+}
+
+.vote-choice.is-loser {
+  cursor: default;
+  pointer-events: none;
+}
+
+.vote-choice.is-loser .vote-choice-inner {
+  filter: grayscale(0.8) brightness(0.7);
+}
+
+.vote-choice.is-loser:hover {
+  transform: none;
+}
+
+.vote-choice.is-loser .vote-choice-media,
+.vote-choice.is-loser .vote-choice-image-fallback {
+  filter: none; /* 상위 .vote-choice-inner에서 필터가 적용되므로 중복 필터 제거 */
+}
+
+.vote-choice.is-selected {
+  transform: translateY(-3px);
+  border-color: var(--vote-choice-selected-border) !important;
+  box-shadow:
+    0 0 45px rgba(252, 146, 199, 0.8),
+    0 0 20px rgba(252, 146, 199, 0.5),
+    0 22px 48px rgba(17, 17, 17, 0.16),
+    0 0 0 2px rgba(252, 146, 199, 0.3);
+  z-index: 5;
+}
+
+.tone-blue.is-selected {
+  border-color: var(--vote-choice-selected-border) !important;
+  box-shadow:
+    0 0 45px rgba(252, 146, 199, 0.8),
+    0 0 20px rgba(252, 146, 199, 0.5),
+    0 22px 48px rgba(17, 17, 17, 0.14),
+    0 0 0 2px rgba(252, 146, 199, 0.3);
+}
+
+.tone-pink.is-selected {
+  border-color: var(--vote-choice-selected-border) !important;
+  box-shadow:
+    0 0 45px rgba(252, 146, 199, 0.8),
+    0 0 20px rgba(252, 146, 199, 0.5),
+    0 22px 48px rgba(17, 17, 17, 0.14),
+    0 0 0 2px rgba(252, 146, 199, 0.3);
+}
+
+.vote-feed-item.vote-oshi-no-ko .vote-choice.is-selected,
+.vote-feed-item.vote-oshi-no-ko
+  .vote-sheet.has-results
+  .vote-choice.is-selected:hover {
+  transform: none;
+}
+
+.vote-sheet-vs {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  z-index: 10; /* 투표 칸보다 위에 오도록 z-index 상향 */
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.vote-sheet-vs img {
+  width: 80px;
+}
+
+.vote-sheet-results {
+  flex: 0 0 auto;
+  margin-top: 16px;
+  padding-top: 2px;
+  animation: voteBarReveal 220ms ease;
+}
+
+.vote-share-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 10px;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.vote-share-footer span:first-child {
+  color: #2e63c8;
+}
+
+.vote-share-footer span:last-child {
+  color: #d94588;
+}
+
+.vote-share-bar {
+  overflow: hidden;
+  display: flex;
+  width: 100%;
+  height: var(--vote-result-bar-height);
+  border-radius: 999px;
+  background: #edf2fb;
+}
+
+.vote-share-segment {
+  height: 100%;
+}
+
+.vote-share-left {
+  background: var(--vote-result-left-color);
+}
+
+.vote-share-right {
+  background: var(--vote-result-right-color);
+}
+
+.vote-action-rail {
+  position: absolute;
+  right: 0;
+  bottom: 38px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--vote-rail-gap);
+}
+
+.vote-action-button {
+  --vote-action-current-bg: var(--vote-action-bg);
+  --vote-action-hover-transform: translateY(-2px);
+  --vote-action-hover-bg: var(--vote-action-current-bg);
+  --vote-action-current-hover-shadow: var(--vote-action-hover-shadow);
+  --vote-action-current-hover-icon-opacity: var(
+    --vote-action-hover-icon-opacity
+  );
+  --vote-action-current-hover-icon-filter: var(--vote-action-hover-icon-filter);
+  --vote-action-current-active-bg: var(--vote-action-active-bg);
+  --vote-action-current-active-shadow: var(--vote-action-active-shadow);
+  --vote-action-current-active-icon-filter: var(
+    --vote-action-active-icon-filter
+  );
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--vote-action-button-size);
+  height: var(--vote-action-button-size);
+  border: 0;
+  border-radius: 999px;
+  background: var(--vote-action-current-bg);
+  box-shadow: var(--vote-action-shadow);
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.vote-action-button img {
+  width: 40px;
+  height: 40px;
+  opacity: var(--vote-action-icon-opacity);
+  transition:
+    opacity 180ms ease,
+    filter 180ms ease;
+}
+
+.vote-action-count {
+  position: absolute;
+  left: 50%;
+  bottom: -18px;
+  transform: translateX(-50%);
+  color: rgba(17, 17, 17, 0.72);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+}
+
+.vote-action-button:hover {
+  transform: var(--vote-action-hover-transform);
+  background: var(--vote-action-hover-bg);
+  box-shadow: var(--vote-action-current-hover-shadow);
+}
+
+.vote-action-button:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.vote-action-button:disabled:hover {
+  transform: none;
+  background: var(--vote-action-current-bg);
+  box-shadow: var(--vote-action-shadow);
+}
+
+.vote-action-button:disabled:hover img {
+  opacity: var(--vote-action-icon-opacity);
+  filter: none;
+}
+
+.vote-action-button:hover img {
+  opacity: var(--vote-action-current-hover-icon-opacity);
+  filter: var(--vote-action-current-hover-icon-filter);
+}
+
+.vote-action-button.action-like {
+  --vote-action-current-bg: var(--vote-action-bg);
+  --vote-action-hover-bg: var(--vote-action-current-bg);
+  --vote-action-hover-transform: translateY(-2px);
+  --vote-action-current-hover-shadow: var(--vote-action-hover-shadow);
+  --vote-action-current-hover-icon-opacity: var(
+    --vote-action-hover-icon-opacity
+  );
+  --vote-action-current-hover-icon-filter: var(--vote-action-hover-icon-filter);
+  --vote-action-current-active-bg: var(--vote-action-active-bg);
+  --vote-action-current-active-shadow: var(--vote-action-active-shadow);
+  --vote-action-current-active-icon-filter: var(
+    --vote-action-active-icon-filter
+  );
+}
+
+.vote-action-button.action-comment {
+  --vote-action-current-bg: var(--vote-action-bg);
+  --vote-action-hover-bg: var(--vote-action-current-bg);
+  --vote-action-hover-transform: translateY(-2px);
+  --vote-action-current-hover-shadow: var(--vote-action-hover-shadow);
+  --vote-action-current-hover-icon-opacity: var(
+    --vote-action-hover-icon-opacity
+  );
+  --vote-action-current-hover-icon-filter: var(--vote-action-hover-icon-filter);
+  --vote-action-current-active-bg: var(--vote-action-active-bg);
+  --vote-action-current-active-shadow: var(--vote-action-active-shadow);
+  --vote-action-current-active-icon-filter: var(
+    --vote-action-active-icon-filter
+  );
+}
+
+.vote-action-button.action-share {
+  --vote-action-current-bg: var(--vote-action-bg);
+  --vote-action-hover-bg: var(--vote-action-current-bg);
+  --vote-action-hover-transform: translateY(-2px);
+  --vote-action-current-hover-shadow: var(--vote-action-hover-shadow);
+  --vote-action-current-hover-icon-opacity: var(
+    --vote-action-hover-icon-opacity
+  );
+  --vote-action-current-hover-icon-filter: var(--vote-action-hover-icon-filter);
+  --vote-action-current-active-bg: var(--vote-action-active-bg);
+  --vote-action-current-active-shadow: var(--vote-action-active-shadow);
+  --vote-action-current-active-icon-filter: var(
+    --vote-action-active-icon-filter
+  );
+}
+
+.vote-action-button.action-filter {
+  --vote-action-current-bg: var(--vote-action-bg);
+  --vote-action-hover-bg: var(--vote-action-current-bg);
+  --vote-action-hover-transform: translateY(-2px);
+  --vote-action-current-hover-shadow: var(--vote-action-hover-shadow);
+  --vote-action-current-hover-icon-opacity: var(
+    --vote-action-hover-icon-opacity
+  );
+  --vote-action-current-hover-icon-filter: var(--vote-action-hover-icon-filter);
+  --vote-action-current-active-bg: var(--vote-action-active-bg);
+  --vote-action-current-active-shadow: var(--vote-action-active-shadow);
+  --vote-action-current-active-icon-filter: var(
+    --vote-action-active-icon-filter
+  );
+}
+
+.vote-action-button.is-active {
+  background: var(--vote-action-current-active-bg);
+  box-shadow: var(--vote-action-current-active-shadow);
+}
+
+.vote-action-button.is-active img {
+  opacity: 1;
+  filter: var(--vote-action-current-active-icon-filter);
+}
+
+.vote-action-button.vote-filter-toggle {
+  position: fixed;
+  top: var(--vote-filter-button-top);
+  left: var(--vote-filter-button-left);
+  z-index: var(--vote-filter-button-z-index);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--vote-filter-button-size);
+  height: var(--vote-filter-button-size);
+  padding: 0;
+  line-height: 0;
+  transform: none;
+}
+
+.vote-action-button.vote-filter-toggle:hover {
+  transform: var(--vote-action-hover-transform);
+}
+
+.vote-action-button.vote-filter-toggle img {
+  width: var(--vote-filter-button-icon-size);
+  height: var(--vote-filter-button-icon-size);
+  display: block;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.vote-feed-loader {
+  height: 1px;
+  flex: 0 0 1px;
+}
+
+@keyframes voteBarReveal {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes voteFeedEnterFromMain {
+  from {
+    opacity: 0;
+    transform: translateY(64px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes voteSheetSettleFromMain {
+  0% {
+    transform: translateY(26px) scale(0.98);
+  }
+
+  100% {
+    transform: translateY(0) scale(1.01);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vote-page.is-entering-from-main .vote-feed,
+  .vote-page.is-entering-from-main .vote-feed-item:first-child .vote-sheet {
+    animation: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .vote-page.has-comment-modal .vote-layout {
+    --vote-side-balance: var(--vote-action-space);
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .vote-page {
+    --vote-page-gutter: 16px;
+    --vote-min-height: 540px;
+    --vote-filter-button-size: 54px;
+    --vote-filter-button-icon-size: 34px;
+    --vote-filter-button-left: 16px;
+    --vote-filter-button-top: calc(var(--vote-header-offset) + 18px);
+    --vote-filter-panel-left: 12px;
+    --vote-filter-panel-width: min(190px, calc(var(--layout-vw) - 24px));
+    --vote-filter-panel-height: calc(
+      100dvh - var(--vote-filter-panel-top) - 20px
+    );
+    --vote-sheet-title-size: clamp(
+      1.5rem,
+      calc(var(--layout-vw) * 0.054),
+      2.2rem
+    );
+    --vote-choice-name-size: clamp(
+      1.35rem,
+      calc(var(--layout-vw) * 0.05),
+      2rem
+    );
+  }
+
+  .vote-layout {
+    --vote-rail-gap: 12px;
+    --vote-action-button-size: 56px;
+    --vote-action-space: 0px;
+    --vote-side-balance: 0px;
+    --vote-sheet-glow-space: 12px;
+    --vote-sheet-extra-height: 0px;
+  }
+
+  .vote-feed-item {
+    padding: 72px 0 92px;
+  }
+
+  .vote-action-rail {
+    right: 50%;
+    bottom: 18px;
+    flex-direction: row;
+    transform: translateX(50%);
+  }
+
+  .vote-action-button img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .vote-action-count {
+    bottom: -14px;
+    font-size: 0.8rem;
+  }
+
+  .vote-sheet {
+    padding: 16px;
+  }
+
+  .vote-sheet-title {
+    padding: 0 96px;
+  }
+
+  .vote-deadline-badge {
+    top: 18px;
+    left: 18px;
+    min-width: 88px;
+    max-width: 122px;
+    padding: 5px 8px;
+    font-size: 0.68rem;
+  }
+
+  .vote-sheet-match {
+    gap: 10px;
+  }
+
+  .vote-sheet-vs img {
+    width: 58px;
+  }
+
+  .vote-share-footer {
+    font-size: 1.45rem;
+  }
+}
+
+/* YouTube & Media Support Styles */
+/* YouTube Custom Player Styles */
+.custom-youtube-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: #000;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.youtube-iframe-target {
+  width: 100%;
+  height: 100%;
+  pointer-events: auto; /* 아이프레임 클릭 허용 (음량 조절 등) */
+}
+
+.youtube-iframe-target + .player-controls {
+  height: calc(100% - 45px); /* 하단 유튜브 컨트롤 바 영역 확보 */
+}
+
+.youtube-iframe-target iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.vote-pick-badge {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(
+    -50%,
+    calc(-50% - 200px)
+  ) !important; /* 중앙에서 200px 위로 */
+  width: 92px !important;
+  height: 42px !important;
+  z-index: 25 !important;
+  background: #f7a1c4 !important;
+  color: white !important;
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  border-radius: 12px !important;
+  font-weight: 900 !important;
+  font-size: 1.1rem !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+  border: 2px solid white !important;
+  transition: all 0.2s !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  margin: 0 !important;
+}
+
+.vote-pick-badge:hover {
+  background: white;
+  color: #f7a1c4;
+  transform: scale(1.05);
+}
+
+.vote-choice.is-selected .vote-pick-badge {
+  display: none; /* 투표 후에는 숨김 */
+}
+
+.vote-choice-media {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.vote-choice-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.vote-choice-audio-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  gap: 20px;
+  padding: 20px;
+  border-radius: inherit;
+}
+
+.audio-icon-large {
+  font-size: 5rem;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+  animation: audioWave 2s ease-in-out infinite;
+}
+
+@keyframes audioWave {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.vote-choice-audio-player {
+  width: 80%;
+  max-width: 300px;
+  height: 40px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+/* 커스텀 플레이어 컨트롤 제거 (네이티브 유튜브 컨트롤 사용) */
+.player-controls {
+  display: none;
+}
+
+.play-icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  border-left: 20px solid #f7a1c4;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+}
+
+.pause-icon {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  position: relative;
+}
+
+.pause-icon::before,
+.pause-icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 6px;
+  height: 24px;
+  background: #f7a1c4;
+  transform: translateY(-50%);
+}
+
+.pause-icon::before {
+  left: 38%;
+}
+.pause-icon::after {
+  right: 38%;
+}
+
+.bottom-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+}
+
+.player-controls:hover .bottom-controls {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.control-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.volume-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  max-width: 120px;
+}
+
+.volume-slider {
+  width: 100%;
+  height: 4px;
+  accent-color: #f7a1c4;
+  cursor: pointer;
+}
+
+.video-loading {
+  position: absolute;
+  color: white;
+  font-size: 14px;
+}
+
+/* 기존 유튜브 관련 스타일 제거/수정 */
+.youtube-embed {
+  background: #000;
+  overflow: hidden;
+}
+
+.youtube-embed iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%) scale(1.5);
+}

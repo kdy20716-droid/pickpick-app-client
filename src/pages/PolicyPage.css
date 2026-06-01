@@ -1,0 +1,133 @@
+.policy-page {
+  width: calc(100% - 40px);
+  max-width: 900px;
+  margin: 60px auto 120px;
+  padding: 60px;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+  line-height: 1.8;
+  color: #333;
+}
+
+.policy-page h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 40px;
+  color: var(--text-dark);
+  border-bottom: 2px solid var(--point);
+  padding-bottom: 20px;
+}
+
+.policy-page h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 40px 0 20px;
+  color: var(--text-dark);
+}
+
+.policy-page h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 30px 0 15px;
+}
+
+.policy-page p {
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.policy-page ul, .policy-page ol {
+  margin-bottom: 25px;
+  padding-left: 20px;
+}
+
+.policy-page li {
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+}
+
+.policy-page strong {
+  color: var(--text-dark);
+}
+
+.contact-info {
+  background: #fdf2f8;
+  padding: 30px;
+  border-radius: 16px;
+  margin-top: 40px;
+}
+
+.contact-info p {
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+/* FAQ Accordion Styles */
+.faq-container {
+  margin-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.faq-item {
+  border-bottom: 1px solid #eee;
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 10px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.faq-question:hover {
+  color: var(--point);
+}
+
+.faq-icon {
+  font-size: 1.4rem;
+  color: var(--point);
+  font-weight: 300;
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 500px;
+  padding: 20px;
+  margin-bottom: 15px;
+}
+
+.faq-answer p {
+  margin-bottom: 0;
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .policy-page {
+    padding: 30px;
+    margin: 40px auto;
+  }
+  
+  .policy-page h1 {
+    font-size: 2rem;
+  }
+}

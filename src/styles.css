@@ -1,0 +1,214 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+:root {
+  --app-min-width: 950px;
+  --layout-vw: max(100vw, var(--app-min-width));
+  --bg: #FDFDFD;
+  --point: #fc92c7;
+  --text-dark: #111111;
+  --space: 25px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-width: var(--app-min-width);
+}
+
+body {
+  font-family: "Pretendard", "Segoe UI", sans-serif;
+  background-color: #FDFDFD;
+  color: var(--text-dark);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-main {
+  position: relative;
+  width: 100%;
+  min-width: var(--app-min-width);
+  z-index: auto; /* z-index를 auto로 설정하여 새로운 스태킹 컨텍스트를 만들지 않으면서도 DOM 순서상 빛(z-index: 0)보다 위에 오게 함 */
+}
+
+/* Profile Borders - Global Styles */
+.profile-border-bronze,
+.profile-border-silver,
+.profile-border-gold,
+.profile-border-platinum,
+.profile-border-diamond,
+.profile-border-master {
+  position: relative !important;
+  border-radius: 50% !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.profile-border-bronze > *,
+.profile-border-silver > *,
+.profile-border-gold > *,
+.profile-border-platinum > *,
+.profile-border-diamond > *,
+.profile-border-master > * {
+  position: relative;
+  z-index: 1;
+}
+
+.profile-border-bronze::before,
+.profile-border-silver::before,
+.profile-border-gold::before,
+.profile-border-platinum::before,
+.profile-border-diamond::before,
+.profile-border-master::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 124%;
+  height: 124%;
+  transform: translate(-50%, -48%); /* Slight upward shift for better visual centering */
+  z-index: 2;
+  background-image: var(--profile-border-image);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+}
+
+.profile-border-bronze {
+  --profile-border-image: url("./assets/브론즈.png");
+}
+
+.profile-border-silver {
+  --profile-border-image: url("./assets/실버.png");
+}
+
+.profile-border-gold {
+  --profile-border-image: url("./assets/골드.png");
+}
+
+.profile-border-platinum {
+  --profile-border-image: url("./assets/플레티넘.png");
+}
+
+.profile-border-diamond {
+  --profile-border-image: url("./assets/다이아.png");
+}
+
+.profile-border-master {
+  --profile-border-image: url("./assets/마스터.png");
+}
+
+.profile-border-challenger {
+  position: relative !important;
+  border-radius: 50% !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.profile-border-challenger > * {
+  position: relative;
+  z-index: 1;
+}
+
+.profile-border-challenger::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 124%;
+  height: 124%;
+  transform: translate(-50%, -48%);
+  z-index: 2;
+  background-image: url("./assets/챌린저.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+}
+
+/* ===================================================================== */
+/* 🚨 DO NOT MODIFY BELOW STYLES (ADMIN / PICK ONLY) - SEE GEMINI.md 🚨 */
+/* ===================================================================== */
+.profile-border-pick {
+  position: relative !important;
+  border-radius: 50% !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.profile-border-pick::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 124%;
+  height: 124%;
+  transform: translate(-50%, -48%);
+  z-index: 2;
+  background-image: url("./assets/pick.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+}
+
+.profile-border-admin {
+  position: relative !important;
+  border-radius: 50% !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.profile-border-admin::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 124%;
+  height: 124%;
+  transform: translate(-50%, -48%);
+  z-index: 2;
+  background-image: url("./assets/admin.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+}
+
+@keyframes border-glow {
+  from { box-shadow: 0 0 0 4px #70D1F4, 0 0 10px #70D1F4; }
+  to { box-shadow: 0 0 0 4px #70D1F4, 0 0 30px #70D1F4; }
+}
+
+.challenger-shine {
+  background: linear-gradient(
+    120deg,
+    #70D1F4 30%,
+    rgba(255, 255, 255, 0.8) 50%,
+    #70D1F4 70%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShine 3s linear infinite;
+  display: inline-block;
+}
+
+@keyframes textShine {
+  to {
+    background-position: 200% center;
+  }
+}

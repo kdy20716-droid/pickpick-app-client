@@ -1,0 +1,319 @@
+body {
+  font-family: "Arial", sans-serif;
+  background: #f8f8f8;
+  margin: 0;
+}
+
+/* 헤더 */
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px;
+  background: white;
+  border-bottom: 1px solid #eee;
+}
+
+.logo {
+  color: #ff8db5;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+.user {
+  margin-left: 10px;
+}
+
+/* 컨테이너 */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 80px);
+}
+
+/* 회원가입 박스 */
+.signup-box {
+  width: 500px; /* 이 수치를 조절하여 박스의 가로 크기를 변경할 수 있습니다. */
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.signup-box h2 {
+  text-align: center;
+  color: #ff8db5;
+  font-size: 28px; /* 폰트 크기 키우기 */
+  margin-top: 10px; /* 위쪽 여백 추가 */
+  margin-bottom: 25px; /* 아래쪽 여백 확보 */
+}
+
+.verified {
+  font-size: 12px;
+  text-align: right;
+  color: #aaa;
+}
+
+/* 입력창 */
+.input-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+  flex: 1;
+}
+
+.input-group-with-btn {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.verify-btn {
+  width: 100px;
+  height: 44px;
+  padding: 0 15px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  border: none;
+  background-color: #ff8db5;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.verify-btn:hover,
+.verify-confirm-btn:hover {
+  background-color: #ff6fa3;
+}
+
+.verify-confirm-btn {
+  width: 100px;
+  height: 44px;
+  padding: 0 15px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  border: none;
+  background-color: #ff8db5;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.verify-btn:disabled {
+  background-color: #ccc;
+  cursor: default;
+}
+
+.verified-badge {
+  margin-top: 10px;
+  background-color: #f0fdf4;
+  color: #16a34a;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid #bbf7d0;
+  text-align: center;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.input-group span {
+  margin-right: 10px;
+}
+
+.input-group input {
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
+/* 비밀번호 토글 버튼 */
+.password-toggle-btn {
+  background: none;
+  border: none;
+  padding: 5px;
+  width: auto;
+  height: auto;
+  color: #ccc;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.password-toggle-btn:hover {
+  color: #ff8db5;
+}
+
+/* 옵션 버튼 */
+.option-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.option-group div {
+  display: flex;
+  align-items: center;
+}
+
+.option-group button {
+  margin-left: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 15px;
+  background: #eee;
+  cursor: pointer;
+  color: #888888; /* 입력창 기본 텍스트 색상과 통일 */
+}
+
+.option-group button.active {
+  background: #ff8db5;
+  color: white;
+}
+
+/* 체크박스 */
+.checkbox {
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+/* 버튼 */
+.submit-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  background: #ff8db5;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background: #ff6fa3;
+}
+
+.top-check {
+  display: flex;
+  justify-content: flex-start;
+  font-size: 12px;
+  color: #666;
+  margin-top: 8px; /* 생년월일 입력창과의 간격 */
+  margin-bottom: 15px; /* 성별/내외국인 선택 버튼과의 간격 */
+  margin-left: 5px; /* 하단 체크박스와 위치 동일하게 맞춤 */
+}
+
+.custom-check {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+/* 기본 체크박스 숨김 */
+.custom-check input {
+  display: none;
+}
+
+/* 박스 */
+.checkmark {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  position: relative;
+}
+
+/* 체크 시 핑크 */
+.custom-check input:checked + .checkmark {
+  background-color: #ff8db5;
+  border-color: #ff8db5;
+}
+
+/* 체크 표시 */
+.custom-check input:checked + .checkmark::after {
+  content: "✔";
+  color: white;
+  font-size: 12px;
+  position: absolute;
+  top: -2px;
+  left: 2px;
+}
+
+/* 텍스트 */
+.custom-check .text {
+  margin-left: 8px;
+  font-size: 12px;
+}
+
+/* 상단 실명 인증 체크박스 텍스트 간격도 하단과 동일하게 맞춤 */
+.top-check .text {
+  margin-left: 12px;
+}
+
+/* 하단 약관 동의 체크박스 전용 스타일 */
+.terms-check {
+  justify-content: flex-start;
+  margin-left: 5px; /* 체크박스를 전체적으로 오른쪽으로 살짝 이동 */
+}
+
+.terms-check .text {
+  margin-left: 12px; /* 텍스트를 체크박스에서 조금 더 떨어지게 간격 확보 */
+}
+
+/* 상단 에러 모달 */
+.error-modal {
+  position: fixed;
+  top: 100px; /* 헤더(높이 80px) 아래로 내려오도록 수정 */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ff4d4d;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    top: 50px; /* 애니메이션 시작 위치도 조정 */
+    opacity: 0;
+  }
+  to {
+    top: 100px;
+    opacity: 1;
+  }
+}

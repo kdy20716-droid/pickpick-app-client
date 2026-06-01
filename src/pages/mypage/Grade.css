@@ -1,0 +1,125 @@
+.gradeSection {
+  margin-top: 15px;
+  width: 100%;
+}
+
+.gradeCard {
+  background: #fff;
+  border-radius: 35px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  padding: 40px;
+}
+
+.gradeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.gradeTitle {
+  font-size: 20px;
+  font-weight: bold;
+  color: #666;
+  margin: 0;
+}
+
+.gradeTabs {
+  display: flex;
+  gap: 20px;
+  border-bottom: 2px solid #f8f8f8;
+  margin-bottom: 30px;
+}
+
+.gradeTab {
+  padding: 10px 5px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #bbb;
+  cursor: pointer;
+  position: relative;
+}
+
+.gradeTab.active {
+  color: #f8bbd0;
+}
+
+.gradeTab.active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #f8bbd0;
+}
+
+.gradeContent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px 10px;
+}
+
+.gradeItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  flex: 0 0 22%; /* 4 items per row approximately */
+  min-width: 150px;
+  padding: 20px 10px;
+  border-radius: 20px;
+  transition: background 0.3s;
+}
+
+.gradeIconWrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  /* profile-border 클래스들이 내부에서 z-index를 사용하므로 overflow: visible 유지 */
+}
+
+.gradeIconPlaceholder {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.gradeName {
+  font-size: 16px;
+  font-weight: bold;
+  color: #777;
+}
+
+.gradeRequirement {
+  font-size: 13px;
+  color: #bbb;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.gradeRequirements {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+/* Tier Specific Colors */
+.grade-bronze { color: #CD7F32 !important; }
+.grade-silver { color: #C0C0C0 !important; }
+.grade-gold { color: #FFD700 !important; }
+.grade-platinum { color: #26C6DA !important; }
+.grade-diamond { color: #8B5CF6 !important; }
+.grade-master { color: #FF4B8D !important; }
+.grade-challenger { color: #70D1F4 !important; }
+

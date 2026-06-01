@@ -1,0 +1,64 @@
+.site-footer {
+  width: 100%;
+  background: var(--bg);
+  padding: 60px 0 40px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  margin-top: 100px;
+}
+
+.footer-inner {
+  width: calc(100% - 22px);
+  max-width: 1420px;
+  margin: 0 auto;
+}
+
+.footer-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.footer-brand {
+  font-family: "Jersey 25", cursive;
+  font-size: 2.5rem;
+  color: var(--point);
+  letter-spacing: 0.03em;
+}
+
+.footer-nav {
+  display: flex;
+  gap: clamp(15px, 4vw, 40px);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-nav a {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: rgba(17, 17, 17, 0.6);
+  transition: color 0.2s ease;
+}
+
+.footer-nav a:hover {
+  color: var(--point);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding-top: 30px;
+  text-align: center;
+}
+
+.copyright {
+  font-size: 0.85rem;
+  color: rgba(17, 17, 17, 0.4);
+}
+
+@media (min-width: 768px) {
+  .footer-top {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
