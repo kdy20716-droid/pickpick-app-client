@@ -3,6 +3,7 @@ import { motion as Motion } from "framer-motion";
 import Header from "./Header";
 import Footer from "./Footer";
 import { useHeaderGlow } from "../hooks/useHeaderGlow";
+import AppHandler from "./AppHandler";
 
 const Layout = () => {
   const { scaleY, opacity } = useHeaderGlow();
@@ -14,6 +15,7 @@ const Layout = () => {
 
   return (
     <div>
+      <AppHandler />
       {/* 화면 전체 배경으로 들어가는 빛 효과 (Header의 z-index에 갇히지 않음) */}
       <Motion.div
         className="background-glow"
