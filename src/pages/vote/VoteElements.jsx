@@ -1,4 +1,5 @@
 import React, { useRef, memo } from "react";
+import { Sun, Moon } from "lucide-react";
 import vsLogo from "../../assets/vs-logo.svg";
 import { 
   formatVoteDeadline, 
@@ -26,9 +27,11 @@ export const VoteActionButton = memo(({ action, active, count, disabled, onToggl
       onClick={handleClick}
     >
       {action.id === "theme" ? (
-        <span className="theme-toggle-icon" style={{ fontSize: "24px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          {isDarkMode ? "☀️" : "🌙"}
-        </span>
+        isDarkMode ? (
+          <Sun size={25} className="theme-toggle-svg" strokeWidth={2.4} />
+        ) : (
+          <Moon size={25} className="theme-toggle-svg" strokeWidth={2.4} />
+        )
       ) : (
         <img src={action.icon} alt="" aria-hidden="true" />
       )}
