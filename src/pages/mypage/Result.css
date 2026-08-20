@@ -167,15 +167,15 @@
 
 /* 중앙 게이지 바 */
 .gauge-track {
-  width: 700px; /* 명시적으로 긴 너비 부여 */
-  max-width: 100%; /* 반응형 대응 */
+  flex: 1 1 auto;
+  max-width: 700px;
+  width: 100%;
   height: 34px;
   background: #f5f5f5;
   border-radius: 10px;
   display: flex;
   overflow: hidden;
   position: relative;
-  flex: none; /* 크기 고정 */
 }
 
 .gauge-fill {
@@ -296,4 +296,142 @@
 .icon-btn:hover {
   background: #fdf2f6;
   color: #f1a0c0;
+}
+
+/* ===================================================================== */
+/* 📱 모바일 반응형 스타일 (Mobile Responsive Layout) */
+/* ===================================================================== */
+@media (max-width: 768px) {
+  .result-container {
+    padding: 0 12px 30px 12px;
+  }
+
+  .result-search-section {
+    margin-bottom: 20px;
+  }
+
+  .result-card {
+    padding: 24px 14px;
+    border-radius: 24px;
+    gap: 28px;
+  }
+
+  .result-item {
+    gap: 14px;
+    padding-bottom: 24px;
+  }
+
+  .result-title {
+    font-size: 1rem;
+    line-height: 1.4;
+    padding: 0 4px;
+  }
+
+  .result-row {
+    flex-direction: row;
+    gap: 6px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .candidate {
+    width: 58px;
+  }
+
+  .img-wrapper {
+    width: 58px;
+    height: 58px;
+    border-radius: 14px;
+  }
+
+  .percent {
+    margin-top: 6px;
+    font-size: 12px;
+  }
+
+  .candidate-name {
+    margin-top: 6px;
+    font-size: 11px;
+  }
+
+  .crown {
+    top: -16px;
+    font-size: 16px;
+  }
+
+  .win-badge {
+    font-size: 9px;
+    padding: 1px 6px;
+  }
+
+  .gauge-track {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 28px;
+  }
+
+  .gauge-fill {
+    font-size: 10px;
+  }
+
+  .left-fill {
+    padding-left: 6px;
+  }
+
+  .right-fill {
+    padding-right: 6px;
+  }
+
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .remaining-time {
+    font-size: 12px;
+    padding: 3px 12px;
+  }
+}
+
+/* ===================================================================== */
+/* 🌙 다크모드 스타일 */
+/* ===================================================================== */
+body.dark-theme .result-card {
+  background: #1c1c20;
+  color: #f4f4f5;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-theme .result-item {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-theme .result-item.is-expired {
+  background: #141418;
+}
+
+body.dark-theme .result-title {
+  color: #e4e4e7;
+}
+
+body.dark-theme .result-search-bar input {
+  background: #27272a;
+  color: #ffffff;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .gauge-track {
+  background: #27272a;
+}
+
+body.dark-theme .icon-btn {
+  background: #27272a;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #a1a1aa;
+}
+
+body.dark-theme .icon-btn:hover {
+  background: #3f3f46;
+  color: #fc92c7;
 }

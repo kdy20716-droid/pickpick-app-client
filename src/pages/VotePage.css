@@ -404,6 +404,59 @@
   backdrop-filter: blur(6px);
 }
 
+.vote-toast-badge {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  min-width: 96px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  animation: voteToastBadgeEnter 220ms cubic-bezier(0.2, 0.9, 0.3, 1) both;
+}
+
+.vote-toast-badge.is-expired {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes voteToastBadgeEnter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+/* 마감된 투표 다크 캔버스 스타일 */
+.vote-sheet.is-expired {
+  background: #141417 !important;
+  color: #ffffff !important;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.vote-sheet.is-expired .vote-sheet-title {
+  color: #ffffff !important;
+}
+
+.vote-sheet.is-expired .vote-choice {
+  background: #232328 !important;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
 .vote-sheet-match {
   position: relative;
   display: grid;
@@ -1273,4 +1326,90 @@
   width: 100%;
   height: 100%;
   transform: translate(-50%, -50%) scale(1.5);
+}
+
+/* ===================================================================== */
+/* 🌙 다크모드 테마 스타일 */
+/* ===================================================================== */
+.vote-action-button.action-theme {
+  --vote-action-current-bg: var(--vote-action-bg);
+  --vote-action-hover-bg: var(--vote-action-current-bg);
+}
+
+body.dark-theme .vote-page {
+  --vote-action-bg: rgba(30, 30, 36, 0.95);
+  --vote-action-shadow: 0 14px 28px rgba(0, 0, 0, 0.4);
+  --vote-sheet-bg: rgba(24, 24, 28, 0.96);
+  --vote-sheet-shadow: 0 22px 60px rgba(0, 0, 0, 0.5);
+  --vote-sheet-active-shadow: 0 28px 72px rgba(0, 0, 0, 0.7);
+  --vote-choice-bg: #27272a;
+  --vote-filter-panel-bg: rgba(24, 24, 28, 0.98);
+  --vote-filter-panel-shadow: 0 22px 60px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-theme .vote-sheet {
+  background: var(--vote-sheet-bg);
+  color: #f4f4f5;
+}
+
+body.dark-theme .vote-sheet-title {
+  color: #ffffff;
+}
+
+body.dark-theme .vote-choice {
+  background: var(--vote-choice-bg);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+body.dark-theme .vote-action-button {
+  background: var(--vote-action-bg);
+  box-shadow: var(--vote-action-shadow);
+  color: #ffffff;
+}
+
+body.dark-theme .vote-action-button img {
+  filter: brightness(0) invert(1);
+}
+
+body.dark-theme .vote-action-button:hover {
+  background: #2e2e38;
+}
+
+body.dark-theme .vote-action-count {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+body.dark-theme .vote-filter-panel {
+  background: var(--vote-filter-panel-bg);
+  box-shadow: var(--vote-filter-panel-shadow);
+}
+
+body.dark-theme .vote-filter-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .vote-filter-header h2 {
+  color: #ffffff;
+}
+
+body.dark-theme .vote-filter-chip {
+  background: #27272a;
+  color: #d4d4d8;
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+body.dark-theme .vote-filter-chip:hover {
+  background: #323238;
+  color: #fc92c7;
+  border-color: #fc92c7;
+}
+
+body.dark-theme .vote-filter-chip.is-active {
+  background: #fc92c7;
+  color: #ffffff;
+  border-color: #fc92c7;
+}
+
+body.dark-theme .empty-state {
+  color: #a1a1aa;
 }

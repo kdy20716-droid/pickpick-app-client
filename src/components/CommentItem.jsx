@@ -99,8 +99,15 @@ function TrashIcon() {
   );
 }
 
-function ReplyItem({ reply, openMenuId, onToggleMenu, onDeleteComment }) {
+function ReplyItem({ reply, openMenuId, onToggleMenu, onDeleteComment, currentUser, isAdmin }) {
   const isMenuOpen = openMenuId === reply.id;
+  const canDelete = Boolean(
+    isAdmin ||
+    (currentUser && (
+      (reply.user_id && String(currentUser.id) === String(reply.user_id)) ||
+      (reply.name && currentUser.name === reply.name)
+    ))
+  );
   
   return (
     <div className="reply-item">
@@ -123,26 +130,28 @@ function ReplyItem({ reply, openMenuId, onToggleMenu, onDeleteComment }) {
               {formatRelativeTime(reply.createdAt)}
             </span>
           </div>
-          <div className="comment-menu-wrap">
-            <button
-              type="button"
-              className="menu-button"
-              onClick={() => onToggleMenu(reply.id)}
-              aria-label="댓글 메뉴 열기"
-            >
-              ...
-            </button>
-            {isMenuOpen ? (
+          {canDelete && (
+            <div className="comment-menu-wrap">
               <button
                 type="button"
-                className="comment-delete"
-                onClick={() => onDeleteComment(reply.id)}
+                className="menu-button"
+                onClick={() => onToggleMenu(reply.id)}
+                aria-label="댓글 메뉴 열기"
               >
-                <TrashIcon />
-                댓글 삭제
+                ...
               </button>
-            ) : null}
-          </div>
+              {isMenuOpen ? (
+                <button
+                  type="button"
+                  className="comment-delete"
+                  onClick={() => onDeleteComment(reply.id)}
+                >
+                  <TrashIcon />
+                  댓글 삭제
+                </button>
+              ) : null}
+            </div>
+          )}
         </div>
         <p className="comment-text">{reply.text}</p>
       </div>
@@ -162,9 +171,18 @@ export default function CommentItem({
   onAddReply,
   onToggleMenu,
   onDeleteComment,
+  currentUser,
+  isAdmin,
 }) {
   const replyCount = comment.replyItems.length;
   const isMenuOpen = openMenuId === comment.id;
+  const canDelete = Boolean(
+    isAdmin ||
+    (currentUser && (
+      (comment.user_id && String(currentUser.id) === String(comment.user_id)) ||
+      (comment.name && currentUser.name === comment.name)
+    ))
+  );
 
   return (
     <article className="comment-item">
@@ -187,26 +205,28 @@ export default function CommentItem({
               {formatRelativeTime(comment.createdAt)}
             </span>
           </div>
-          <div className="comment-menu-wrap">
-            <button
-              type="button"
-              className="menu-button"
-              onClick={() => onToggleMenu(comment.id)}
-              aria-label="댓글 메뉴 열기"
-            >
-              ...
-            </button>
-            {isMenuOpen ? (
+          {canDelete && (
+            <div className="comment-menu-wrap">
               <button
                 type="button"
-                className="comment-delete"
-                onClick={() => onDeleteComment(comment.id)}
+                className="menu-button"
+                onClick={() => onToggleMenu(comment.id)}
+                aria-label="댓글 메뉴 열기"
               >
-                <TrashIcon />
-                댓글 삭제
+                ...
               </button>
-            ) : null}
-          </div>
+              {isMenuOpen ? (
+                <button
+                  type="button"
+                  className="comment-delete"
+                  onClick={() => onDeleteComment(comment.id)}
+                >
+                  <TrashIcon />
+                  댓글 삭제
+                </button>
+              ) : null}
+            </div>
+          )}
         </div>
 
         <p className="comment-text">{comment.text}</p>
@@ -267,6 +287,8 @@ export default function CommentItem({
                     openMenuId={openMenuId}
                     onToggleMenu={onToggleMenu}
                     onDeleteComment={onDeleteComment}
+                    currentUser={currentUser}
+                    isAdmin={isAdmin}
                   />
                 ))}
               </div>

@@ -9,7 +9,8 @@ const Layout = () => {
   const { scaleY, opacity } = useHeaderGlow();
   const location = useLocation();
 
-  const isVotePage =
+  const hideFooter =
+    location.pathname === "/" ||
     location.pathname.startsWith("/vote") ||
     location.pathname.startsWith("/post");
 
@@ -32,7 +33,7 @@ const Layout = () => {
       </main>
 
       {/* 하단 푸터 (Footer) */}
-      {!isVotePage && <Footer />}
+      {!hideFooter && <Footer />}
     </div>
   );
 };

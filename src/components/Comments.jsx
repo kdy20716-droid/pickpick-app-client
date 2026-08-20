@@ -102,7 +102,7 @@ export default function Comments({
   const [isOverlayMode, setIsOverlayMode] = useState(false);
   const modalRef = useRef(null);
 
-  const { user: currentUser } = useAuth();
+  const { user: currentUser, isAdmin } = useAuth();
   const userId = currentUser?.id || "guest";
 
   const [commentReactions, setCommentReactions] = useState(() => {
@@ -568,6 +568,8 @@ export default function Comments({
               onAddReply={handleAddReply}
               onToggleMenu={handleToggleMenu}
               onDeleteComment={handleDeleteComment}
+              currentUser={currentUser}
+              isAdmin={isAdmin}
             />
           ))}
         </div>

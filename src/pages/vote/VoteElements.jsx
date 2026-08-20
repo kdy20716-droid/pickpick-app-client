@@ -7,7 +7,7 @@ import {
 import { useFitSingleLineText } from "../../hooks/useFitSingleLineText.js";
 
 // Sub-components
-export const VoteActionButton = memo(({ action, active, count, disabled, onToggle, onShare, onComment, copied, cardId }) => {
+export const VoteActionButton = memo(({ action, active, count, disabled, onToggle, onShare, onComment, copied, cardId, isDarkMode }) => {
   const handleClick = () => {
     if (disabled) return;
     if (action.id === "share") { onShare(cardId); return; }
@@ -15,7 +15,7 @@ export const VoteActionButton = memo(({ action, active, count, disabled, onToggl
     onToggle(cardId, action.id);
   };
 
-  const isActive = action.id === "share" ? copied : active;
+  const isActive = action.id === "share" ? copied : action.id === "theme" ? isDarkMode : active;
 
   return (
     <button
@@ -25,7 +25,13 @@ export const VoteActionButton = memo(({ action, active, count, disabled, onToggl
       disabled={disabled}
       onClick={handleClick}
     >
-      <img src={action.icon} alt="" aria-hidden="true" />
+      {action.id === "theme" ? (
+        <span className="theme-toggle-icon" style={{ fontSize: "24px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          {isDarkMode ? "☀️" : "🌙"}
+        </span>
+      ) : (
+        <img src={action.icon} alt="" aria-hidden="true" />
+      )}
       {action.id === "like" && <span className="vote-action-count">{count}</span>}
     </button>
   );
@@ -65,10 +71,10 @@ export const YouTubePlayer = memo(({ videoId, title, isActive }) => {
 export const VoteCard = memo(({
   card, selectedCandidateId, onSelect, actionState, likeCount, copied,
   onToggleAction, onShare, onOpenComments, isCommentsOpen, isActive,
-  currentTime, registerCardRef, actionButtons
+  currentTime, registerCardRef, actionButtons, isDarkMode
 }) => {
   const expiresAtTime = card.expiresAt ? new Date(card.expiresAt).getTime() : NaN;
-  const isExpired = Number.isFinite(expiresAtTime) && expiresAtTime <= currentTime;
+  const isExpired = (Number.isFinite(expiresAtTime) && expiresAtTime <= currentTime) || Boolean(card.isExpired);
   const hasVoted = Boolean(selectedCandidateId) || isExpired;
   const deadlineLabel = formatVoteDeadline(card.expiresAt, currentTime);
 
@@ -78,8 +84,12 @@ export const VoteCard = memo(({
       className={`vote-feed-item vote-${card.id}${isActive ? " is-active" : ""}`}
       id={card.feedId}
     >
-      <div className={`vote-sheet${hasVoted ? " has-results" : ""}`}>
-        {deadlineLabel && <div className="vote-deadline-badge">{deadlineLabel}</div>}
+      <div className={`vote-sheet${hasVoted ? " has-results" : ""}${isExpired ? " is-expired" : ""}`}>
+        {isExpired ? (
+          <div className="vote-toast-badge is-expired">마감됨!</div>
+        ) : (
+          deadlineLabel && <div className="vote-deadline-badge">{deadlineLabel}</div>
+        )}
         <VoteSheetTitle>{card.title}</VoteSheetTitle>
 
         <div className="vote-sheet-match">
@@ -147,6 +157,7 @@ export const VoteCard = memo(({
             count={action.id === "like" ? likeCount : 0}
             onToggle={onToggleAction} onShare={onShare} onComment={onOpenComments}
             copied={copied} cardId={card.feedId}
+            isDarkMode={isDarkMode}
           />
         ))}
       </div>

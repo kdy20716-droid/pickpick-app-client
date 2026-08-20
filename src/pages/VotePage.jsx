@@ -35,6 +35,7 @@ const actionButtons = [
   { id: "comment", label: "댓글", icon: commentIcon, kind: "modal" },
   { id: "share", label: "공유", icon: shareIcon, kind: "button" },
   { id: "report", label: "신고", icon: reportIcon, kind: "button" },
+  { id: "theme", label: "다크모드", kind: "theme" },
 ];
 
 function getTargetVoteId(routePostId, search, hash) {
@@ -70,11 +71,24 @@ export default function VotePage() {
   const [reportCardId, setReportCardId] = useState("");
   const [selectedTag, setSelectedTag] = useState("전체");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return localStorage.getItem("pickpick_dark_mode") === "true";
+  });
 
   const pageRef = useRef(null);
   const copyTimeoutRef = useRef(null);
   const fetchSequenceRef = useRef(0);
   const { activeCardId, cardRefs, feedRef, registerCardRef } = useActiveVoteCard(cards, targetVoteId);
+
+  // Sync dark mode class
+  useEffect(() => {
+    localStorage.setItem("pickpick_dark_mode", String(isDarkMode));
+    if (isDarkMode) {
+      document.body.classList.add("dark-theme");
+    } else {
+      document.body.classList.remove("dark-theme");
+    }
+  }, [isDarkMode]);
 
   // Sync with localStorage
   useEffect(() => {
@@ -128,16 +142,21 @@ export default function VotePage() {
 
       const serverVotes = {};
       const serverActions = {};
+      const savedLocalVotes = JSON.parse(localStorage.getItem(`selectedVotes_${userId}`) || "{}");
+
       const formattedCards = data.map(item => {
         const cardId = item.id.toString();
         const total = (item.candidate_a_count || 0) + (item.candidate_b_count || 0);
         if (item.user_voted_side) serverVotes[cardId] = item.user_voted_side.toLowerCase();
         serverActions[cardId] = { like: !!item.user_liked, likeCount: item.like_count || 0 };
 
+        const isUserVoted = Boolean(item.user_voted_side || savedLocalVotes[cardId]);
+        const isExp = item.expires_at ? new Date(item.expires_at) <= new Date() : false;
+
         return {
           id: cardId, feedId: cardId, title: item.title, expiresAt: item.expires_at,
-          isExpired: item.expires_at ? new Date(item.expires_at) <= new Date() : false,
-          isVoted: !!item.user_voted_side,
+          isExpired: isExp,
+          isVoted: isUserVoted,
           leftCandidate: { id: "a", name: item.candidate_a_name, image: item.candidate_a_image, type: item.candidate_a_type || "image", tone: "light" },
           rightCandidate: { id: "b", name: item.candidate_b_name, image: item.candidate_b_image, type: item.candidate_b_type || "image", tone: "dark" },
           shares: { 
@@ -147,20 +166,29 @@ export default function VotePage() {
         };
       });
 
-      const sorted = formattedCards.sort((a, b) => {
-        // 1. 투표 여부 (안 한 것이 먼저)
-        if (a.isVoted !== b.isVoted) return (a.isVoted ? 1 : 0) - (b.isVoted ? 1 : 0);
+      // 1. 기간 남은 투표 -> 2. 무기한 투표 -> 3. 마감된 투표 -> 4. 이미 투표한 것 순 정렬
+      const getCardPriority = (c) => {
+        const isExp = c.expiresAt ? new Date(c.expiresAt) <= new Date() : false;
+        const hasDeadline = Boolean(c.expiresAt);
 
-        // 2. 투표 상태 (마감안됨 -> 무기한 -> 마감됨)
-        const getPriority = (c) => {
-          if (c.expiresAt && !c.isExpired) return 0; // 마감안된 투표
-          if (!c.expiresAt) return 1;                // 무기한 투표
-          return 2;                                   // 마감된 투표
-        };
-        const pA = getPriority(a);
-        const pB = getPriority(b);
+        if (!c.isVoted) {
+          if (hasDeadline && !isExp) return 0; // 1. 기간 남은 투표
+          if (!hasDeadline) return 1;          // 2. 무기한 투표
+          return 2;                            // 3. 마감된 투표
+        } else {
+          // 4. 이미 참여한 투표
+          if (hasDeadline && !isExp) return 10;
+          if (!hasDeadline) return 11;
+          return 12;
+        }
+      };
+
+      const sorted = formattedCards.sort((a, b) => {
+        const pA = getCardPriority(a);
+        const pB = getCardPriority(b);
         return pA - pB;
       });
+
       setSelectedVotes(prev => ({ ...prev, ...serverVotes }));
       setCardActions(prev => ({ ...prev, ...serverActions }));
       setCards(pinTargetCard(sorted, targetVoteId));
@@ -172,7 +200,7 @@ export default function VotePage() {
     } finally {
       if (fetchSequenceRef.current === fetchId) setIsVotesLoading(false);
     }
-  }, [selectedTag, isLoggedIn, currentUser?.id, targetVoteId]);
+  }, [selectedTag, isLoggedIn, currentUser?.id, targetVoteId, userId]);
 
   useEffect(() => { fetchVotes(); }, [fetchVotes]);
 
@@ -191,14 +219,19 @@ export default function VotePage() {
   useActiveVoteHash(activeCardId, location);
 
   const handleVote = useCallback(async (cardId, candidateId) => {
-    if (userId === "guest") return alert("로그인 후 이용할 수 있습니다.");
     // Already voted? Check current state.
     if (selectedVotes[cardId]) return;
     
     const card = cards.find(c => c.feedId === cardId);
     if (!card) return;
 
-    // 1. Optimistic Update
+    // 비회원인 경우: DB 투표는 하지 않지만 로컬에서 결과(게이지/퍼센트)를 바로 확인할 수 있도록 허용
+    if (userId === "guest" || !isLoggedIn) {
+      setSelectedVotes(prev => ({ ...prev, [cardId]: candidateId }));
+      return;
+    }
+
+    // 1. Optimistic Update (로그인 회원)
     setSelectedVotes(prev => ({ ...prev, [cardId]: candidateId }));
 
     try {
@@ -206,7 +239,7 @@ export default function VotePage() {
       if (res.success) {
         // 2. Sync with real data from server
         const total = res.counts.candidate_a_count + res.counts.candidate_b_count;
-        setCards(prev => prev.map(c => c.feedId === cardId ? { ...c, shares: { 
+        setCards(prev => prev.map(c => c.feedId === cardId ? { ...c, isVoted: true, shares: { 
           left: total === 0 ? 50 : Math.round((res.counts.candidate_a_count / total) * 100),
           right: total === 0 ? 50 : Math.round((res.counts.candidate_b_count / total) * 100)
         }} : c));
@@ -222,14 +255,19 @@ export default function VotePage() {
       });
       alert(err.response?.data?.message || "투표 처리에 실패했습니다.");
     }
-  }, [userId, cards, selectedVotes]);
+  }, [userId, isLoggedIn, cards, selectedVotes]);
 
   const handleToggleAction = useCallback(async (cardId, actionId) => {
+    if (actionId === "theme") {
+      setIsDarkMode(prev => !prev);
+      return;
+    }
+
     const card = cards.find(c => c.feedId === cardId);
     if (!card) return;
 
     if (actionId === "like") {
-      if (userId === "guest") return alert("로그인이 필요합니다.");
+      if (userId === "guest" || !isLoggedIn) return alert("로그인이 필요합니다.");
       
       const currentLiked = !!cardActions[cardId]?.like;
       const nextLiked = !currentLiked;
@@ -259,18 +297,44 @@ export default function VotePage() {
     } else if (actionId === "report") {
       setReportCardId(cardId);
     }
-  }, [userId, cards, cardActions]);
+  }, [userId, isLoggedIn, cards, cardActions]);
 
   const handleShare = useCallback(async (cardId) => {
-    const url = `${window.location.origin}/vote${getVoteHash(cardId)}`;
+    const card = cards.find(c => c.feedId === cardId);
+    const title = card ? `${card.title} - PICKPICK` : "PICKPICK 투표";
+    const shareUrl = `https://pickpick.dev/vote${getVoteHash(cardId)}`;
+    const text = card ? `"${card.title}" 밸런스 게임 투표에 참여해보세요!` : "PICKPICK 밸런스 게임 투표에 참여해보세요!";
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, text, url: shareUrl });
+        setCopiedCardId(cardId);
+        if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+        copyTimeoutRef.current = setTimeout(() => setCopiedCardId(""), 1600);
+        return;
+      } catch (err) {
+        if (err.name === "AbortError") return;
+      }
+    }
+
     try {
-      if (navigator.share) await navigator.share({ title: "PICKPICK 투표", text: "이 밸런스 게임 같이 투표해봐!", url });
-      else if (navigator.clipboard) await navigator.clipboard.writeText(url);
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(shareUrl);
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = shareUrl;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      }
       setCopiedCardId(cardId);
       if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
       copyTimeoutRef.current = setTimeout(() => setCopiedCardId(""), 1600);
-    } catch { setCopiedCardId(""); }
-  }, []);
+    } catch {
+      setCopiedCardId("");
+    }
+  }, [cards]);
 
   const handleOpenComments = useCallback((cardId) => {
     setIsFilterOpen(false);
@@ -324,6 +388,7 @@ export default function VotePage() {
                onOpenComments={handleOpenComments} isCommentsOpen={commentCardId === card.feedId}
                isActive={activeCardId === card.feedId} currentTime={currentTime}
                registerCardRef={registerCardRef} actionButtons={actionButtons}
+               isDarkMode={isDarkMode}
              />
            )) : <div className="empty-state">검색 결과가 없습니다.</div>}
         </div>

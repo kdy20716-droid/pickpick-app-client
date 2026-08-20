@@ -12,6 +12,13 @@ body {
   --space: 25px;
 }
 
+body.dark-theme {
+  --bg: #121214;
+  --text-dark: #f3f4f6;
+  background-color: #121214 !important;
+  color: #f3f4f6 !important;
+}
+
 @media (min-width: 1024px) {
   :root {
     --app-min-width: 950px;
@@ -31,10 +38,21 @@ body,
 
 body {
   font-family: "Pretendard", "Segoe UI", sans-serif;
-  background-color: #FDFDFD;
+  background-color: var(--bg);
   color: var(--text-dark);
   line-height: 1.5;
   overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.vote-page,
+.vote-sheet,
+.vote-choice,
+.vote-action-button,
+.vote-filter-panel,
+.result-card,
+.result-container {
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
 a {

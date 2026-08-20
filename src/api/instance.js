@@ -1,9 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  // 개발 환경(localhost)일 경우 로컬 서버(4000포트)를 사용하고, 아닐 경우 배포 서버 사용
-  // http://localhost:4000"
-  baseURL: "https://dolphin-app-onqn2.ondigitalocean.app/",
+  baseURL: import.meta.env.VITE_API_URL || "https://pickpick-server-02a101b24d80.herokuapp.com/",
 });
 
 // 인터셉터 (interceptor) : 요청 / 응답시 중간에 가로채는 함수

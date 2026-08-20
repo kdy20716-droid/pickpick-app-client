@@ -2,7 +2,7 @@ export const getImageUrl = (imagePath) => {
   if (!imagePath) return null;
   if (imagePath.startsWith("http")) return imagePath;
   const baseUrl =
-    import.meta.env.VITE_API_URL || "https://dolphin-app-onqn2.ondigitalocean.app";
+    import.meta.env.VITE_API_URL || "https://pickpick-server-02a101b24d80.herokuapp.com";
   return `${baseUrl}/uploads/${imagePath}`;
 };
 

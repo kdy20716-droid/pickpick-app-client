@@ -27,6 +27,7 @@ const MyPage = () => {
   const [confirmModal, setConfirmModal] = useState(null); // 'logout', 'delete', or null
   const [promotionInfo, setPromotionInfo] = useState(null); // { oldGrade, newGrade } or null
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { displayOutlet, transitionStage, onTransitionEnd, activePath } =
     useRouteAnimation();
 
@@ -122,6 +123,70 @@ const MyPage = () => {
           <Menu />
         </div>
       </nav>
+
+      {/* 모바일 상단 헤더 바 */}
+      <div className={styles.mobileHeaderBar}>
+        <h2 className={styles.mobilePageTitle}>
+          {activePath === "/mypage" && "내 프로필"}
+          {activePath.includes("history") && "참여 기록"}
+          {activePath.includes("like") && "좋아요한 투표"}
+          {activePath.includes("mypoll") && "내가 만든 투표"}
+          {activePath.includes("profileedit") && "계정 설정"}
+          {activePath.includes("faq") && "자주 묻는 질문"}
+        </h2>
+        <button
+          type="button"
+          className={styles.mobileMenuToggleBtn}
+          onClick={() => setIsDrawerOpen(true)}
+          aria-label="마이페이지 메뉴 열기"
+        >
+          <span className={styles.mobileMenuIcon}>☰</span>
+        </button>
+      </div>
+
+      {/* 모바일 메뉴 슬라이드 드로어 */}
+      {isDrawerOpen && (
+        <div
+          className={styles.menuDrawerOverlay}
+          onClick={() => setIsDrawerOpen(false)}
+        >
+          <div
+            className={styles.menuDrawerContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={styles.menuDrawerHeader}>
+              <h3>메뉴</h3>
+              <button
+                type="button"
+                className={styles.menuDrawerCloseBtn}
+                onClick={() => setIsDrawerOpen(false)}
+                aria-label="메뉴 닫기"
+              >
+                ✕
+              </button>
+            </div>
+            <div
+              className={styles.menuDrawerBody}
+              onClick={() => setIsDrawerOpen(false)}
+            >
+              <Menu />
+              <div className={styles.drawerBottomSection}>
+                <button
+                  type="button"
+                  className={styles.drawerSupportBtn}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsDrawerOpen(false);
+                    setIsSupportModalOpen(true);
+                  }}
+                >
+                  SUPPORT
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <main className={styles.mainContent}>
         <div

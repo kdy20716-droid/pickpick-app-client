@@ -123,3 +123,10 @@
 .grade-master { color: #FF4B8D !important; }
 .grade-challenger { color: #70D1F4 !important; }
 
+@media (max-width: 767px) {
+  .gradeCard {
+    border-radius: 24px !important;
+    padding: 20px 14px !important;
+  }
+}
+
