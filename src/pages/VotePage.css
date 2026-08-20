@@ -81,20 +81,20 @@
   --filter-chip-active-text: #fff;
   --filter-chip-active-border: #fc92c7;
   --filter-chip-active-shadow: 0 8px 18px rgba(252, 146, 199, 0.24);
-  position: fixed;
-  top: var(--vote-filter-panel-top);
-  left: var(--vote-filter-panel-left);
+  position: absolute;
+  top: 10px;
+  left: 10px;
   z-index: var(--vote-filter-panel-z-index);
   display: flex;
   flex-direction: column;
-  width: var(--vote-filter-panel-width, var(--vote-filter-panel-min-width));
-  height: var(--vote-filter-panel-height);
-  max-height: calc(100dvh - var(--vote-header-offset) - 22px);
+  width: 200px;
+  max-width: calc(100% - 20px);
+  max-height: calc(100% - 20px);
   padding: 11px 10px 14px;
   overflow: hidden;
   border-radius: var(--vote-filter-panel-radius);
   background: var(--vote-filter-panel-bg);
-  box-shadow: var(--vote-filter-panel-shadow);
+  box-shadow: 0 16px 40px rgba(17, 17, 17, 0.2);
   animation: filterPanelEnter 180ms ease both;
 }
 
@@ -422,9 +422,10 @@
 .vote-sheet-match {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
   gap: var(--vote-choice-gap);
-  padding-top: 16px;
+  padding-top: 8px;
   flex: 1;
   min-height: 0;
   align-items: stretch;
@@ -549,17 +550,17 @@
   margin: 0;
   position: absolute;
   right: 0;
-  bottom: 44px; /* 14px에서 30px 올려서 44px로 수정 */
+  bottom: 12px;
   left: 0;
   box-sizing: border-box;
   width: auto;
-  padding: 0 18px;
+  padding: 0 16px;
   display: -webkit-box;
   pointer-events: none;
-  max-height: calc(100% - 36px);
+  max-height: calc(100% - 20px);
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   text-align: center;
   overflow-wrap: anywhere;
   word-break: normal;
@@ -569,7 +570,7 @@
     var(--vote-choice-name-fit-size, var(--vote-choice-name-size))
   );
   font-weight: 900;
-  line-height: 1.08;
+  line-height: 1.1;
   color: #ffffff;
   text-shadow:
     var(--vote-name-outline-negative-size)
@@ -652,20 +653,22 @@
 
 .vote-sheet-vs {
   position: absolute;
-  top: 52%;
+  top: 50%;
   left: 50%;
-  z-index: 10; /* 투표 칸보다 위에 오도록 z-index 상향 */
+  z-index: 10;
   transform: translate(-50%, -50%);
   pointer-events: none;
 }
 
 .vote-sheet-vs img {
-  width: 80px;
+  width: 48px;
+  height: 48px;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.4));
 }
 
 .vote-sheet-results {
   flex: 0 0 auto;
-  margin-top: 16px;
+  margin-top: 10px;
   padding-top: 2px;
   animation: voteBarReveal 220ms ease;
 }
@@ -675,8 +678,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  margin-top: 10px;
-  font-size: 2rem;
+  margin-top: 8px;
+  font-size: 1.6rem;
   font-weight: 800;
   line-height: 1;
   letter-spacing: 0;
@@ -712,15 +715,14 @@
 }
 
 .vote-action-rail {
-.vote-action-rail {
   position: absolute;
   left: 50%;
-  bottom: 10px;
+  bottom: 8px;
   transform: translateX(-50%);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
   gap: 10px;
   width: auto;
   max-width: 95%;
@@ -884,27 +886,30 @@
 }
 
 .vote-action-button.vote-filter-toggle {
-  position: fixed;
-  top: var(--vote-filter-button-top);
-  left: var(--vote-filter-button-left);
+  position: absolute;
+  top: 10px;
+  left: 10px;
   z-index: var(--vote-filter-button-z-index);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--vote-filter-button-size);
-  height: var(--vote-filter-button-size);
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  min-height: 38px;
+  border-radius: 50%;
   padding: 0;
   line-height: 0;
   transform: none;
 }
 
 .vote-action-button.vote-filter-toggle:hover {
-  transform: var(--vote-action-hover-transform);
+  transform: scale(1.05);
 }
 
 .vote-action-button.vote-filter-toggle img {
-  width: var(--vote-filter-button-icon-size);
-  height: var(--vote-filter-button-icon-size);
+  width: 20px;
+  height: 20px;
   display: block;
   flex: 0 0 auto;
   object-fit: contain;
@@ -1048,14 +1053,17 @@
 
   .vote-deadline-badge {
     top: 12px;
-    left: 12px;
-    min-width: 80px;
+    right: 12px !important;
+    left: auto !important;
+    min-width: 60px;
     max-width: 120px;
     padding: 4px 6px;
     font-size: 0.65rem;
   }
 
   .vote-sheet-match {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
     gap: 8px;
   }
 
