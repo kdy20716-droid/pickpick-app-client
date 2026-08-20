@@ -45,15 +45,11 @@ img {
 }
 
 .page-main {
-  width: min(1180px, calc(100% - 32px));
+  width: 100%;
+  max-width: 500px;
   margin: 0 auto;
-  padding-bottom: 40px;
-}
-
-@media (min-width: 768px) {
-  .page-main {
-    width: min(1180px, calc(100% - 50px));
-  }
+  padding: 0 16px 20px;
+  box-sizing: border-box;
 }
 
 .hero {
@@ -61,17 +57,10 @@ img {
 }
 
 .hero h1 {
-  margin: 40px 0 0;
-  font-size: 2.2rem;
-  line-height: 1.12;
-  font-weight: 600;
-}
-
-@media (min-width: 768px) {
-  .hero h1 {
-    margin: 50px 0 0;
-    font-size: 3.5rem;
-  }
+  margin: 20px 0 0;
+  font-size: 1.85rem;
+  line-height: 1.15;
+  font-weight: 700;
 }
 
 .hero h1 span {
@@ -79,24 +68,22 @@ img {
 }
 
 .hero p {
-  width: min(780px, 100%);
-  margin: 12px auto 0;
-  font-size: 1rem;
-  line-height: 1.55;
-  font-weight: 700;
+  width: 100%;
+  margin: 8px auto 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  font-weight: 600;
+  color: #666;
 }
 
-@media (min-width: 768px) {
-  .hero p {
-    margin: 16px auto 0;
-    font-size: 1.25rem;
-  }
+body.dark-theme .hero p {
+  color: #a1a1aa;
 }
 
 .vote-section {
   position: relative;
-  width: min(var(--vote-card-width), 100%);
-  margin: var(--space) auto 0;
+  width: 100%;
+  margin: 16px auto 0;
 }
 
 .main-page.is-leaving-for-vote {
@@ -113,16 +100,6 @@ img {
   z-index: 10;
 }
 
-@media (min-width: 1024px) {
-  .rank-badge {
-    top: 20px;
-    left: calc(-1 * var(--badge-offset));
-    padding: 7px 10px 7px 7px;
-    border-radius: 20px 0 0 20px;
-    z-index: 0;
-  }
-}
-
 .rank-badge-inner {
   display: block;
   padding: 6px 10px;
@@ -134,30 +111,21 @@ img {
   line-height: 1;
 }
 
-@media (min-width: 1024px) {
-  .rank-badge-inner {
-    padding: 10px 16px;
-    border-radius: 14px;
-    font-size: 1.7rem;
-  }
-}
-
 .main-page .vote-card {
   position: relative;
   z-index: 1;
-  padding: 20px;
+  padding: 16px 14px;
   border: 0 !important;
-  border-radius: 20px;
+  border-radius: 22px;
   overflow: visible !important;
   background: var(--surface);
   box-shadow: var(--shadow) !important;
   transform: none;
 }
 
-@media (min-width: 768px) {
-  .main-page .vote-card {
-    padding: var(--space);
-  }
+body.dark-theme .main-page .vote-card {
+  background: #1e1e24;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4) !important;
 }
 
 .main-page:not(.is-leaving-for-vote) .vote-section > .vote-card:hover {
@@ -169,30 +137,18 @@ img {
 .vote-card h2 {
   margin: 0 0;
   text-align: center;
-  font-size: 1.5rem;
-  font-weight: 550;
+  font-size: 1.35rem;
+  font-weight: 700;
   word-break: keep-all;
-}
-
-@media (min-width: 768px) {
-  .vote-card h2 {
-    font-size: 2.8rem;
-  }
+  color: var(--text-dark);
 }
 
 .vote-match {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  padding-top: 20px;
-}
-
-@media (min-width: 768px) {
-  .vote-match {
-    gap: var(--space);
-    padding-top: var(--space);
-  }
+  gap: 10px;
+  padding-top: 14px;
 }
 
 .main-page .candidate-card {

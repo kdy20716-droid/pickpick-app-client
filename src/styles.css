@@ -60,10 +60,30 @@ a {
   text-decoration: none;
 }
 
+.mobile-app-root {
+  width: 100%;
+  max-width: 500px;
+  min-height: 100vh;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+}
+
+.mobile-app-main {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+}
+
 .site-main {
   position: relative;
   width: 100%;
-  z-index: auto; /* z-index를 auto로 설정하여 새로운 스태킹 컨텍스트를 만들지 않으면서도 DOM 순서상 빛(z-index: 0)보다 위에 오게 함 */
+  z-index: auto;
 }
 
 /* Profile Borders - Global Styles */

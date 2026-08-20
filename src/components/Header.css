@@ -2,55 +2,61 @@
   position: sticky;
   top: 0;
   z-index: 120;
-  height: 64px;
+  height: 56px;
   background: var(--bg);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  transition: background-color 0.4s ease;
 }
 
-@media (min-width: 768px) {
-  .site-header {
-    height: 80px;
-  }
+body.dark-theme .site-header {
+  background: var(--bg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .header-inner {
-  width: calc(100% - 32px);
-  max-width: 1420px;
+  width: 100%;
+  max-width: 500px;
   height: 100%;
   margin: 0 auto;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-}
-
-@media (min-width: 768px) {
-  .header-inner {
-    width: calc(100% - 22px);
-    gap: var(--space);
-  }
 }
 
 .brand {
   font-family: "Jersey 25", cursive;
-  font-size: 2.2rem;
+  font-size: 2.1rem;
   line-height: 1;
-  color: var(--point);
+  color: var(--point, #fc92c7);
   letter-spacing: 0.03em;
 }
 
-@media (min-width: 768px) {
-  .brand {
-    font-size: 3.5rem;
-  }
-}
-
-.site-nav {
+.header-right {
   display: flex;
   align-items: center;
-  gap: clamp(10px, calc(var(--layout-vw) * 0.02), 36px);
-  font-size: 1rem;
-  font-weight: 300;
-  white-space: nowrap;
+  gap: 12px;
+}
+
+.header-login-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: #fde8f0;
+  color: #fc92c7;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.header-login-btn:hover {
+  background: #fc92c7;
+  color: #ffffff;
+}
+
+body.dark-theme .header-login-btn {
+  background: rgba(252, 146, 199, 0.15);
+  color: #fc92c7;
 }
 
 @media (min-width: 768px) {

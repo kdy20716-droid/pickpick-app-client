@@ -13,16 +13,10 @@ const Header = () => {
         <Link to="/" className="brand">
           PICKPICK
         </Link>
-        <nav className="site-nav" aria-label="주요 메뉴">
-          <Link to="/create" data-label="+ CREATE">
-            + CREATE
-          </Link>
-          <Link to="/ranking" data-label="RANKING">
-            RANKING
-          </Link>
+        <div className="header-right">
           {!isLoggedIn ? (
-            <Link to="/login" data-label="LOG IN">
-              LOG IN
+            <Link to="/login" className="header-login-btn">
+              로그인
             </Link>
           ) : (
             <Link to="/mypage" className="account-link" aria-label="계정">
@@ -41,7 +35,7 @@ const Header = () => {
               </div>
             </Link>
           )}
-        </nav>
+        </div>
       </div>
     </header>
   );

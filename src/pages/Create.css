@@ -1,64 +1,70 @@
 .create-page-container {
-  height: calc(100vh - 80px); /* 헤더 높이 제외하고 고정 */
+  min-height: calc(100vh - 120px);
   display: flex;
-  justify-content: center;
-  align-items: center; /* 중앙 정렬 */
-  background: transparent; /* 배경 빛이 보이도록 투명하게 설정 */
-  overflow: hidden; /* 스크롤 방지 */
-  --create-header-offset: 80px;
-  --create-panel-min-height: 600px;
-  --create-panel-height: max(
-    var(--create-panel-min-height),
-    calc(100dvh - var(--create-header-offset) - 90px)
-  );
-  height: calc(100dvh - var(--create-header-offset));
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background: transparent;
+  padding: 16px 12px 90px;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .main-content {
   display: flex;
-  justify-content: center;
-  align-items: stretch;
-  gap: 30px;
-  max-width: 1240px;
-  width: 95%;
-  max-height: 90%; /* 화면 높이의 90% 이상 넘지 않게 */
-  height: var(--create-panel-height);
-  min-height: var(--create-panel-min-height);
-  max-height: none;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  box-sizing: border-box;
 }
 
 .editor-card {
   background-color: #fff;
-  border-radius: 25px;
-  box-shadow: 0 4px 12px rgba(252, 146, 199, 0.18); /* 투명도를 0.1에서 0.18로 약간 높임 */
-  padding: 30px; /* 패딩 약간 복구 */
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+body.dark-theme .editor-card {
+  background-color: #1e1e24;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 /* Preview Section */
 .preview-section {
-  flex: 2.2; /* 이미지 영역 비중 대폭 확대 */
-  max-width: 850px;
+  width: 100%;
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  justify-content: flex-start;
-  min-height: 0;
+  box-sizing: border-box;
 }
 
 .editor-card__title-input {
-  flex: 0 0 auto;
-  width: 85%;
-  font-size: 28px;
+  width: 100%;
+  font-size: 18px;
   font-weight: bold;
   border: none;
   border-bottom: 2px solid #f0f0f0;
-  padding: 10px;
+  padding: 8px 4px;
   text-align: center;
   outline: none;
   color: #333;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+body.dark-theme .editor-card__title-input {
+  color: #f4f4f5;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
 .vs-container {
@@ -73,20 +79,25 @@
 }
 
 .candidate-box {
-  width: 380px; /* 시원시원한 너비 */
-  height: 400px; /* 시원시원한 높이 */
-  background-color: #d9d9d9;
-  border-radius: 20px;
+  width: 48%;
+  aspect-ratio: 1 / 1.15;
+  height: auto;
+  min-height: 140px;
+  background-color: #f1f3f5;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
   overflow: hidden;
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.05); /* 내부 그림자로 변경하여 깔끔하게 */
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease;
-  outline: none; /* 기본 포커스 테두리 제거 */
-  height: 100%;
+  outline: none;
+}
+
+body.dark-theme .candidate-box {
+  background-color: #27272a;
 }
 
 .candidate-box:hover,
@@ -476,29 +487,30 @@
   border-radius: 18px;
 }
 
-/* Floating Button */
+/* Action Submit Button */
 .fab-button {
-  position: fixed; /* 화면에 고정 */
-  bottom: 40px;
-  right: 40px;
-  z-index: 100; /* 다른 요소 위에 표시 */
-  width: 120px;
-  height: 55px;
-  border-radius: 30px;
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  height: 50px;
+  margin: 16px auto 0;
+  border-radius: 25px;
   background-color: #f7a1c4;
   color: #fff;
   border: none;
   cursor: pointer;
-  box-shadow: 0 8px 25px rgba(247, 161, 196, 0.5);
+  box-shadow: 0 6px 20px rgba(247, 161, 196, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
+  font-size: 17px;
+  font-weight: 700;
   transition: all 0.3s ease;
+  z-index: 10;
 }
 
 .fab-button:hover {
-  transform: translateY(-5px) scale(1.05);
+  transform: translateY(-2px);
   background-color: #f589b4;
 }
 
@@ -511,54 +523,5 @@
 .fab-button:disabled:hover {
   transform: none;
   background-color: #f7a1c4;
-}
-
-/* 반응형 레이아웃 (화면이 950px 이하일 때 세로 배치) */
-@media (max-width: 0px) {
-  .create-page-container {
-    height: auto;
-    min-height: calc(100vh - 80px);
-    padding: 20px 0;
-    overflow-y: auto;
-  }
-
-  .main-content {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 0 20px 50px 20px;
-    height: auto;
-    min-height: 0;
-    max-height: none;
-  }
-
-  .preview-section,
-  .settings-section {
-    max-width: 100% !important;
-    width: 100%;
-    flex: none;
-  }
-
-  .vs-container {
-    flex-direction: row;
-    width: 100%;
-    justify-content: center;
-  }
-
-  .candidate-box {
-    width: 45%;
-    max-width: 380px;
-    height: 380px;
-  }
-
-  .fab-button {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 120px;
-    height: 55px;
-    border-radius: 30px;
-    z-index: 100;
-  }
 }
 
