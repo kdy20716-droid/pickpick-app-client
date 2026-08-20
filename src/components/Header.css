@@ -122,24 +122,18 @@ body.dark-theme .header-login-btn {
   object-fit: cover;
 }
 
-.profile-img-small.default-icon {
-  width: 32px;
-  height: 32px;
-  opacity: 0.6;
-}
-
 .background-glow {
-  position: fixed; /* 페이지의 고정된 배경으로 작동 */
-  top: 80px; /* 헤더의 높이와 정확히 맞물림 */
+  position: fixed;
+  top: 56px;
   left: 0;
   right: 0;
-  height: 50px; /* 기본 두께를 조금 더 두껍게 */
+  height: 36px;
   background: linear-gradient(
     180deg,
-    rgba(252, 146, 199, 0.45) 0%,
-    rgba(252, 146, 199, 0.2) 50%,
+    rgba(252, 146, 199, 0.35) 0%,
+    rgba(252, 146, 199, 0.12) 50%,
     rgba(252, 146, 199, 0) 100%
   );
-  pointer-events: none; /* 클릭을 절대 방해하지 않음 */
-  z-index: 0; /* 배경색 위로 렌더링되도록 0으로 설정 */
+  pointer-events: none;
+  z-index: 100;
 }

@@ -57,7 +57,8 @@ export default function VotePage() {
   const { user: currentUser, isLoggedIn } = useAuth();
   const userId = currentUser?.id || "guest";
   
-  const targetVoteId = useMemo(() => getTargetVoteId(routePostId, location.search, location.hash), [routePostId, location.search, location.hash]);
+  // 최초 진입 시 타겟 투표 ID (스크롤 시 hash 변경으로 인한 무한 재호출 방지)
+  const initialTargetVoteId = useRef(getTargetVoteId(routePostId, location.search, location.hash)).current;
   const entersFromMain = isMainRouteTransition(location.state?.transition);
   
   const [cards, setCards] = useState([]);
@@ -78,7 +79,7 @@ export default function VotePage() {
   const pageRef = useRef(null);
   const copyTimeoutRef = useRef(null);
   const fetchSequenceRef = useRef(0);
-  const { activeCardId, cardRefs, feedRef, registerCardRef } = useActiveVoteCard(cards, targetVoteId);
+  const { activeCardId, cardRefs, feedRef, registerCardRef } = useActiveVoteCard(cards, initialTargetVoteId);
 
   // Sync dark mode class
   useEffect(() => {
@@ -137,7 +138,7 @@ export default function VotePage() {
     setVotesError("");
 
     try {
-      const data = await getVote(null, selectedTag, "random", isLoggedIn ? currentUser?.id : null, null, null, null, targetVoteId || null);
+      const data = await getVote(null, selectedTag, "random", isLoggedIn ? currentUser?.id : null, null, null, null, initialTargetVoteId || null);
       if (fetchSequenceRef.current !== fetchId) return;
 
       const serverVotes = {};
@@ -191,7 +192,7 @@ export default function VotePage() {
 
       setSelectedVotes(prev => ({ ...prev, ...serverVotes }));
       setCardActions(prev => ({ ...prev, ...serverActions }));
-      setCards(pinTargetCard(sorted, targetVoteId));
+      setCards(pinTargetCard(sorted, initialTargetVoteId));
     } catch {
       if (fetchSequenceRef.current === fetchId) {
         setCards([]);
@@ -200,7 +201,7 @@ export default function VotePage() {
     } finally {
       if (fetchSequenceRef.current === fetchId) setIsVotesLoading(false);
     }
-  }, [selectedTag, isLoggedIn, currentUser?.id, targetVoteId, userId]);
+  }, [selectedTag, isLoggedIn, currentUser?.id, initialTargetVoteId, userId]);
 
   useEffect(() => { fetchVotes(); }, [fetchVotes]);
 
@@ -215,7 +216,7 @@ export default function VotePage() {
     return () => { cancelAnimationFrame(frameId); feed.removeEventListener("scroll", handleScroll); };
   }, [commentCardId, feedRef]);
 
-  useVotePageScrollSnap({ pageRef, feedRef, activeCardId, cardRefs, targetCardId: targetVoteId });
+  useVotePageScrollSnap({ pageRef, feedRef, activeCardId, cardRefs, targetCardId: initialTargetVoteId });
   useActiveVoteHash(activeCardId, location);
 
   const handleVote = useCallback(async (cardId, candidateId) => {

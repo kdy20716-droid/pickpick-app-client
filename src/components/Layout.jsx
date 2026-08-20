@@ -23,15 +23,16 @@ const Layout = () => {
   return (
     <div className="mobile-app-root">
       <AppHandler />
-      {/* 배경 빛 효과 */}
+
+      {/* 상단 모바일 앱 헤더 */}
+      <Header />
+
+      {/* 헤더 바로 아래 배경 빛 효과 */}
       <Motion.div
         className="background-glow"
         aria-hidden="true"
         style={{ scaleY, opacity, transformOrigin: "top" }}
       />
-
-      {/* 상단 모바일 앱 헤더 */}
-      <Header />
 
       {/* 모바일 컨텐츠 영역 */}
       <main className="mobile-app-main">

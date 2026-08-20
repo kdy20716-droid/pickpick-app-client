@@ -21,8 +21,8 @@ body.dark-theme {
 
 @media (min-width: 1024px) {
   :root {
-    --app-min-width: 950px;
-    --layout-vw: max(100vw, var(--app-min-width));
+    --app-min-width: 100%;
+    --layout-vw: 100vw;
   }
 }
 
