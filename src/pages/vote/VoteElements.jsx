@@ -28,9 +28,9 @@ export const VoteActionButton = memo(({ action, active, count, disabled, onToggl
     >
       {action.id === "theme" ? (
         isDarkMode ? (
-          <Sun size={25} className="theme-toggle-svg" strokeWidth={2.4} />
+          <Sun size={32} className="theme-toggle-svg" strokeWidth={2.4} />
         ) : (
-          <Moon size={25} className="theme-toggle-svg" strokeWidth={2.4} />
+          <Moon size={32} className="theme-toggle-svg" strokeWidth={2.4} />
         )
       ) : (
         <img src={action.icon} alt="" aria-hidden="true" />
