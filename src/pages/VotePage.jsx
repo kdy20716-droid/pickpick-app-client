@@ -134,7 +134,10 @@ export default function VotePage() {
 
   const fetchVotes = useCallback(async () => {
     const fetchId = ++fetchSequenceRef.current;
-    setIsVotesLoading(true);
+    setCards(prev => {
+      if (prev.length === 0) setIsVotesLoading(true);
+      return prev;
+    });
     setVotesError("");
 
     try {
