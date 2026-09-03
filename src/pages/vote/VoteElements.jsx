@@ -129,7 +129,7 @@ export const VoteCard = memo(({
                         <div className="audio-icon-large">🎵</div>
                         <audio src={candidate.image} controls={hasVoted} className="vote-choice-audio-player" onClick={(e) => e.stopPropagation()} />
                       </div>
-                    ) : <img src={candidate.image} alt={candidate.name} />
+                    ) : <img src={candidate.image} alt={candidate.name} loading="lazy" decoding="async" />
                   ) : <span className="vote-choice-image-fallback">{candidate.name?.slice(0, 1) || "?"}</span>}
                   <span className="vote-choice-overlay" aria-hidden="true" />
                   <p className="vote-choice-name" style={getCandidateNameStyle(candidate.name)}>{candidate.name}</p>
